@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Speedtest Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .testArea { display: inline-block; margin: 10px; text-align: center; }
+        .meterText { font-size: 24px; font-weight: bold; }
+        #startStopBtn { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Speedtest Test</h1>
+    <div id="testWrapper">
+        <button id="startStopBtn" onclick="startStop()">Start Test</button>
+        <div class="testArea">
+            <div>Download</div>
+            <canvas id="dlMeter" width="200" height="150"></canvas>
+            <div id="dlText" class="meterText">0</div>
+            <div>Mbps</div>
+        </div>
+        <div class="testArea">
+            <div>Upload</div>
+            <canvas id="ulMeter" width="200" height="150"></canvas>
+            <div id="ulText" class="meterText">0</div>
+            <div>Mbps</div>
+        </div>
+        <div class="testArea">
+            <div>Ping</div>
+            <div id="pingText" class="meterText">0</div>
+            <div>ms</div>
+        </div>
+    </div>
+
+    <script src="/speedtest/speedtest.js"></script>
+    <script src="/speedtest/speedtest_worker.js"></script>
+    <script>
+        function I(i){return document.getElementById(i);}
+
+        var s = new Speedtest();
+        s.setParameter("url_dl", "/speedtest/backend/garbage.php?cors=1");
+        s.setParameter("url_ul", "/speedtest/backend/empty.php?cors=1");
+        s.setParameter("url_ping", "/speedtest/backend/empty.php?cors=1");
+        s.setParameter("url_getIp", "/speedtest/backend/getIP.php?cors=1");
+        s.setParameter("url_worker", "/speedtest/speedtest_worker.js");
+
+        function drawMeter(c, amount, bk, fg, progress, prog) {
+            var ctx = c.getContext("2d");
+            var cw = c.width, ch = c.height;
+            ctx.clearRect(0, 0, cw, ch);
+            ctx.beginPath();
+            ctx.strokeStyle = bk || "#EAEAEA";
+            ctx.lineWidth = 10;
+            ctx.arc(cw/2, ch-30, ch/2-20, -Math.PI*1.1, Math.PI*0.1);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.strokeStyle = fg || "#6060AA";
+            ctx.lineWidth = 10;
+            ctx.arc(cw/2, ch-30, ch/2-20, -Math.PI*1.1, amount * Math.PI * 1.2 - Math.PI*1.1);
+            ctx.stroke();
+        }
+
+        function mbpsToAmount(s) { return 1 - (1 / (Math.pow(1.3, Math.sqrt(s)))); }
+        function format(d) { d = Number(d); if (d < 10) return d.toFixed(2); if (d < 100) return d.toFixed(1); return d.toFixed(0); }
+
+        var uiData = null;
+
+        function startStop() {
+            if (s.getState() == 3) {
+                s.abort();
+                I("startStopBtn").textContent = "Start Test";
+                initUI();
+            } else {
+                I("startStopBtn").textContent = "Abort";
+                s.onupdate = function(data) { uiData = data; };
+                s.onend = function(aborted) {
+                    I("startStopBtn").textContent = "Start Test";
+                    updateUI(true);
+                };
+                s.start();
+            }
+        }
+
+        function updateUI(forced) {
+            if (!forced && s.getState() != 3) return;
+            if (uiData == null) return;
+            I("dlText").textContent = format(uiData.dlStatus);
+            drawMeter(I("dlMeter"), mbpsToAmount(Number(uiData.dlStatus)), "#EAEAEA", "#6060AA");
+            I("ulText").textContent = format(uiData.ulStatus);
+            drawMeter(I("ulMeter"), mbpsToAmount(Number(uiData.ulStatus)), "#EAEAEA", "#6060AA");
+            I("pingText").textContent = format(uiData.pingStatus);
+        }
+
+        function initUI() {
+            drawMeter(I("dlMeter"), 0, "#EAEAEA", "#6060AA");
+            drawMeter(I("ulMeter"), 0, "#EAEAEA", "#6060AA");
+            I("dlText").textContent = "0";
+            I("ulText").textContent = "0";
+            I("pingText").textContent = "0";
+        }
+
+        window.requestAnimationFrame = window.requestAnimationFrame || function(callback) { setTimeout(callback, 1000/60); };
+        function frame() { requestAnimationFrame(frame); updateUI(); }
+        frame();
+
+        initUI();
+    </script>
+</body>
+</html>
