@@ -20,6 +20,9 @@
                 <flux:navbar.item icon="folder" :href="route('mission-issues')" :current="request()->routeIs('mission-issues*')" wire:navigate>
                     {{ __('Masalah Misi') }}
                 </flux:navbar.item>
+                <flux:navbar.item icon="cpu-chip" :href="route('operasi-alat')" :current="request()->routeIs('operasi-alat*')" wire:navigate>
+                    {{ __('Log Operasi Alat') }}
+                </flux:navbar.item>
             </flux:navbar>
 
             <flux:spacer />
@@ -48,6 +51,14 @@
                         />
                     </flux:tooltip>
                 @endif
+                <flux:tooltip :content="__('Inventaris Aset')" position="bottom">
+                    <flux:navbar.item
+                        class="h-10 max-lg:hidden [&>div>svg]:size-5"
+                        icon="archive-box"
+                        href="{{ route('aset') }}"
+                        :label="__('Inventaris Aset')"
+                    />
+                </flux:tooltip>
                 <flux:tooltip :content="__('Documentation')" position="bottom">
                     <flux:navbar.item
                         href="{{ route('documentation') }}"
@@ -79,6 +90,9 @@
                     <flux:sidebar.item icon="plus" :href="route('mission-issues')" :current="request()->routeIs('mission-issues*')" wire:navigate>
                         {{ __('Masalah Misi') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="cpu-chip" :href="route('operasi-alat')" :current="request()->routeIs('operasi-alat*')" wire:navigate>
+                        {{ __('Log Operasi Alat') }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="plus" :href="route('logs')" :current="request()->routeIs('logs')" wire:navigate>
                         {{ __('Log') }}
                     </flux:sidebar.item>
@@ -92,6 +106,9 @@
                             {{ __('Manajemen Satker') }}
                         </flux:sidebar.item>
                     @endif
+                    <flux:sidebar.item icon="archive-box" :href="route('aset')" :current="request()->routeIs('aset')" wire:navigate>
+                        {{ __('Inventaris Aset') }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="book-open-text" :href="route('documentation')" :current="request()->routeIs('documentation*')" wire:navigate>
                         {{ __('Dokumentasi') }}
                     </flux:sidebar.item>

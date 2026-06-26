@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Database\Factories\MissionIssueFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'tanggal',
@@ -22,6 +25,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class MissionIssue extends Model
 {
+    /** @use HasFactory<MissionIssueFactory> */
+    use HasFactory;
+
     protected function casts(): array
     {
         return [
@@ -32,6 +38,14 @@ class MissionIssue extends Model
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
+
+    /**
+     * Daftar log operasi alat yang terkait dengan masalah misi ini.
+     */
+    public function operasiAlats(): HasMany
+    {
+        return $this->hasMany(OperasiAlat::class);
     }
 
     /**
