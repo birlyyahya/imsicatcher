@@ -32,6 +32,7 @@ new #[Layout('layouts.app'), Title('Detail Masalah Misi')] class extends Compone
                 <flux:text class="mt-1 text-sm text-zinc-500">Informasi lengkap laporan masalah misi.</flux:text>
             </div>
             <div class="flex items-center gap-2">
+                <flux:button :href="route('mission-issues.pdf', $issue)" icon="arrow-down-tray" variant="filled">Export PDF</flux:button>
                 <flux:button :href="route('mission-issues.edit', $issue)" wire:navigate variant="primary">Edit</flux:button>
                 <flux:button :href="route('mission-issues')" wire:navigate variant="ghost">Kembali</flux:button>
             </div>

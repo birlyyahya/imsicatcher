@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             TrackActivity::class,
         ]);
+
+        // The speedtest upload test POSTs without a CSRF token.
+        $middleware->validateCsrfTokens(except: [
+            'net-speedtest/*',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

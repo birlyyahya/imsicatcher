@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MissionIssuePdfController;
+use App\Http\Controllers\SpeedtestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -7,8 +9,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/', '/dashboard')->name('home');
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::view('network-traffic', 'pages.monitor.network-traffic')->name('network-traffic');
+
+    Route::prefix('net-speedtest')->name('speedtest.')->group(function () {
+        Route::match(['get', 'post', 'head'], 'empty', [SpeedtestController::class, 'empty'])->name('empty');
+        Route::get('garbage', [SpeedtestController::class, 'garbage'])->name('garbage');
+        Route::get('getIP', [SpeedtestController::class, 'getIP'])->name('getip');
+    });
     Route::livewire('mission-issues', 'pages::monitor.mission-issues')->name('mission-issues');
     Route::livewire('mission-issues/create', 'pages::monitor.mission-issues-create')->name('mission-issues.create');
+    Route::get('mission-issues/{issue}/pdf', MissionIssuePdfController::class)->name('mission-issues.pdf');
     Route::livewire('mission-issues/{issue}/edit', 'pages::monitor.mission-issues-edit')->name('mission-issues.edit');
     Route::livewire('mission-issues/{issue}', 'pages::monitor.mission-issues-show')->name('mission-issues.show');
     Route::livewire('logs', 'pages::monitor.logs')->name('logs');
