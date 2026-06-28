@@ -24,6 +24,10 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
 };
 
 ?>
+@assets
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+@endassets
 <div class="space-y-6">
     <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
         <div class="flex flex-wrap items-center justify-between gap-2">
@@ -32,6 +36,7 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
                 <flux:text class="mt-1 text-sm text-zinc-500">Informasi lengkap log operasi alat.</flux:text>
             </div>
             <div class="flex items-center gap-2">
+                <flux:button :href="route('operasi-alat.pdf', $operasiAlat)" icon="arrow-down-tray" variant="filled">Cetak PDF</flux:button>
                 <flux:button :href="route('operasi-alat.edit', $operasiAlat)" wire:navigate variant="primary">Edit</flux:button>
                 <flux:button :href="route('operasi-alat')" wire:navigate variant="ghost">Kembali</flux:button>
             </div>
@@ -75,8 +80,8 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
                 <p class="mt-1 font-medium">{{ $operasiAlat->satker?->nama ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Lokasi</p>
-                <p class="mt-1 font-medium">{{ $operasiAlat->lokasi ?: '-' }}</p>
+                <p class="text-xs uppercase text-zinc-500">Keterangan Lokasi</p>
+                <p class="mt-1 font-medium">{{ $operasiAlat->lokasi_keterangan ?: ($operasiAlat->lokasi ?: '-') }}</p>
             </div>
             <div>
                 <p class="text-xs uppercase text-zinc-500">Masalah Misi Terkait</p>
@@ -91,6 +96,24 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
                 </p>
             </div>
         </div>
+    </section>
+
+    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <flux:heading size="lg">Lokasi Operasi</flux:heading>
+
+        @if (filled($operasiAlat->latitude) && filled($operasiAlat->longitude))
+            <div class="mt-3">
+                @include('partials.operasi-alat-map', [
+                    'interactive' => false,
+                    'latitude' => $operasiAlat->latitude,
+                    'longitude' => $operasiAlat->longitude,
+                ])
+            </div>
+            <p class="mt-2 text-xs text-zinc-500">Koordinat: {{ $operasiAlat->latitude }}, {{ $operasiAlat->longitude }}</p>
+        @else
+            {{-- Fallback untuk data lama sebelum fitur peta: tampilkan kolom lokasi lama. --}}
+            <p class="mt-2 text-sm text-zinc-500">{{ $operasiAlat->lokasi ?: 'Belum ada data lokasi pada log ini.' }}</p>
+        @endif
     </section>
 
     <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">

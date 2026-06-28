@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MissionIssuePdfController;
+use App\Http\Controllers\OperasiAlatPdfController;
 use App\Http\Controllers\SpeedtestController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('mission-issues/{issue}', 'pages::monitor.mission-issues-show')->name('mission-issues.show');
     Route::livewire('operasi-alat', 'pages::monitor.operasi-alat')->name('operasi-alat');
     Route::livewire('operasi-alat/create', 'pages::monitor.operasi-alat-create')->name('operasi-alat.create');
+    Route::get('operasi-alat/{operasiAlat}/pdf', OperasiAlatPdfController::class)->name('operasi-alat.pdf');
     Route::livewire('operasi-alat/{operasiAlat}/edit', 'pages::monitor.operasi-alat-edit')->name('operasi-alat.edit');
     Route::livewire('operasi-alat/{operasiAlat}', 'pages::monitor.operasi-alat-show')->name('operasi-alat.show');
     Route::livewire('logs', 'pages::monitor.logs')->name('logs');

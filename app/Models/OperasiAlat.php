@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'waktu_mulai',
     'waktu_selesai',
     'lokasi',
+    'latitude',
+    'longitude',
+    'lokasi_keterangan',
     'tujuan_operasi',
     'hasil',
     'foto_bukti',
@@ -55,11 +58,19 @@ class OperasiAlat extends Model
         'sebagian' => 'Sebagian',
     ];
 
+    /**
+     * Titik default peta saat koordinat belum ditandai (Manokwari, Papua Barat).
+     */
+    public const DEFAULT_LAT = -0.8615;
+    public const DEFAULT_LNG = 134.0620;
+
     protected function casts(): array
     {
         return [
             'waktu_mulai' => 'datetime',
             'waktu_selesai' => 'datetime',
+            'latitude' => 'decimal:7',
+            'longitude' => 'decimal:7',
         ];
     }
 

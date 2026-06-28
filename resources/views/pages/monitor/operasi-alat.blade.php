@@ -106,6 +106,7 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                 $query->where(function (Builder $innerQuery) use ($search) {
                     $innerQuery
                         ->where('lokasi', 'like', "%{$search}%")
+                        ->orWhere('lokasi_keterangan', 'like', "%{$search}%")
                         ->orWhere('tujuan_operasi', 'like', "%{$search}%")
                         ->orWhere('catatan', 'like', "%{$search}%");
                 });
@@ -216,7 +217,14 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                                 <td class="px-3 py-3">{{ $log->jenisAlatLabel() }}</td>
                                 <td class="px-3 py-3">{{ $log->operator?->name ?? '-' }}</td>
                                 <td class="px-3 py-3">{{ $log->satker?->nama ?? '-' }}</td>
-                                <td class="px-3 py-3">{{ $log->lokasi ?: '-' }}</td>
+                                <td class="px-3 py-3">
+                                    <div>{{ $log->lokasi_keterangan ?: ($log->lokasi ?: '-') }}</div>
+                                    @if (filled($log->latitude) && filled($log->longitude))
+                                        <a href="{{ route('operasi-alat.show', $log) }}" wire:navigate class="mt-0.5 inline-flex items-center gap-1 text-xs text-blue-600 hover:underline">
+                                            <flux:icon name="map-pin" class="size-3.5" /> Lihat Lokasi
+                                        </a>
+                                    @endif
+                                </td>
                                 <td class="px-3 py-3 max-w-xs">{{ \Illuminate\Support\Str::limit($log->tujuan_operasi, 70) }}</td>
                                 <td class="px-3 py-3">
                                     @if ($log->hasil === 'berhasil')
