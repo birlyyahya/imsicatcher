@@ -222,7 +222,7 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                             <th class="px-3 py-3 font-semibold">Lokasi</th>
                             <th class="px-3 py-3 font-semibold">Tujuan</th>
                             <th class="px-3 py-3 font-semibold">Hasil</th>
-                            <th class="px-3 py-3 font-semibold">Masalah Misi</th>
+                            <th class="px-3 py-3 font-semibold">Incident</th>
                             <th class="px-3 py-3 font-semibold">Foto Bukti</th>
                             <th class="px-3 py-3 font-semibold">Aksi</th>
                         </tr>

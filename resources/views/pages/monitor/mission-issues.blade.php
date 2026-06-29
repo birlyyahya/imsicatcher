@@ -11,7 +11,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
-new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
+new #[Layout('layouts.app'), Title('Incident')] class extends Component
 {
     use WithPagination;
 
@@ -99,7 +99,7 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
 
         $issue->delete();
 
-        Toaster::success('Masalah misi berhasil dihapus.');
+        Toaster::success('Incident berhasil dihapus.');
     }
 
     public function render(): View
@@ -112,7 +112,7 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
 <div>
     <div class="space-y-6">
         <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:heading size="xl">Masalah Misi</flux:heading>
+            <flux:heading size="xl">Incidents</flux:heading>
             <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                 Pantau, tindak lanjuti, dan dokumentasikan setiap kejadian yang mempengaruhi misi.
             </flux:text>
@@ -154,7 +154,7 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
 
         <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <form class="flex flex-wrap items-center gap-2">
-                <flux:input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari masalah misi ..." class="w-full md:w-auto" />
+                <flux:input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari Incident ..." class="w-full md:w-auto" />
                 <flux:select wire:model.live="filterStatus" class="w-full md:w-auto">
                     <flux:select.option value="">Semua Status</flux:select.option>
                     <flux:select.option value="baru">Baru</flux:select.option>
@@ -175,7 +175,7 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
 
         <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <div class="mb-3 flex items-center justify-between">
-                <flux:heading size="lg">Daftar Masalah Misi</flux:heading>
+                <flux:heading size="lg">Daftar Incidents</flux:heading>
                 <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary">Tambah Misi</flux:button>
             </div>
 
@@ -228,12 +228,12 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
                                     <td class="px-3 py-3 space-x-2 whitespace-nowrap">
                                         <flux:button href="{{ route('mission-issues.edit', $issue) }}" variant="outline" size="sm" wire:navigate>Edit</flux:button>
                                     <flux:button href="{{ route('mission-issues.show', $issue) }}" variant="primary" size="sm" wire:navigate>Lihat</flux:button>
-                                    <flux:button variant="danger" size="sm" wire:click="delete({{ $issue->id }})" wire:confirm="Yakin hapus masalah misi ini? Tindakan ini tidak dapat dibatalkan.">Hapus</flux:button>
+                                    <flux:button variant="danger" size="sm" wire:click="delete({{ $issue->id }})" wire:confirm="Yakin hapus Incident ini? Tindakan ini tidak dapat dibatalkan.">Hapus</flux:button>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="12" class="px-3 py-8 text-center text-zinc-500">Belum ada data masalah misi.</td>
+                                <td colspan="12" class="px-3 py-8 text-center text-zinc-500">Belum ada data Incident.</td>
                             </tr>
                         @endforelse
                     </tbody>

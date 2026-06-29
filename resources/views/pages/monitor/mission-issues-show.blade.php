@@ -6,7 +6,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Layout('layouts.app'), Title('Detail Masalah Misi')] class extends Component
+new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
 {
     public MissionIssue $issue;
 
@@ -28,8 +28,8 @@ new #[Layout('layouts.app'), Title('Detail Masalah Misi')] class extends Compone
     <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
         <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
-                <flux:heading size="xl">Detail Masalah Misi #{{ $issue->id }}</flux:heading>
-                <flux:text class="mt-1 text-sm text-zinc-500">Informasi lengkap laporan masalah misi.</flux:text>
+                <flux:heading size="xl">Detail Incident #{{ $issue->id }}</flux:heading>
+                <flux:text class="mt-1 text-sm text-zinc-500">Informasi lengkap laporan incident.</flux:text>
             </div>
             <div class="flex items-center gap-2">
                 <flux:button :href="route('mission-issues.pdf', $issue)" icon="arrow-down-tray" variant="filled">Export PDF</flux:button>

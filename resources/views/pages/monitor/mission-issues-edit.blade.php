@@ -10,7 +10,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-new #[Layout('layouts.app'), Title('Edit Masalah Misi')] class extends Component
+new #[Layout('layouts.app'), Title('Edit Incident')] class extends Component
 {
     use WithFileUploads;
 
@@ -100,7 +100,7 @@ new #[Layout('layouts.app'), Title('Edit Masalah Misi')] class extends Component
 
         $this->issue->update($payload);
 
-        session()->flash('success', 'Data masalah misi berhasil diperbarui.');
+        session()->flash('success', 'Data Incident berhasil diperbarui.');
         $this->redirectRoute('mission-issues', navigate: true);
     }
 
@@ -115,8 +115,8 @@ new #[Layout('layouts.app'), Title('Edit Masalah Misi')] class extends Component
     <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
         <div class="flex items-center justify-between gap-2">
             <div>
-                <flux:heading size="xl">Edit Masalah Misi #{{ $issue->id }}</flux:heading>
-                <flux:text class="mt-1 text-sm text-zinc-500">Perbarui data masalah misi.</flux:text>
+                <flux:heading size="xl">Edit Incident #{{ $issue->id }}</flux:heading>
+                <flux:text class="mt-1 text-sm text-zinc-500">Perbarui data Incident.</flux:text>
             </div>
             <flux:button :href="route('mission-issues')" wire:navigate variant="ghost">Kembali</flux:button>
         </div>

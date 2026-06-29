@@ -9,7 +9,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-new #[Layout('layouts.app'), Title('Tambah Masalah Misi')] class extends Component
+new #[Layout('layouts.app'), Title('Tambah Incident')] class extends Component
 {
     use WithFileUploads;
 
@@ -84,7 +84,7 @@ new #[Layout('layouts.app'), Title('Tambah Masalah Misi')] class extends Compone
 
         MissionIssue::query()->create($payload);
 
-        session()->flash('success', 'Data masalah misi berhasil ditambahkan.');
+        session()->flash('success', 'Data Incident berhasil ditambahkan.');
         $this->redirectRoute('mission-issues', navigate: true);
     }
 
@@ -99,8 +99,8 @@ new #[Layout('layouts.app'), Title('Tambah Masalah Misi')] class extends Compone
     <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
         <div class="flex items-center justify-between gap-2">
             <div>
-                <flux:heading size="xl">Tambah Masalah Misi</flux:heading>
-                <flux:text class="mt-1 text-sm text-zinc-500">Isi data laporan masalah misi secara lengkap.</flux:text>
+                <flux:heading size="xl">Tambah Incident</flux:heading>
+                <flux:text class="mt-1 text-sm text-zinc-500">Isi data laporan incident secara lengkap.</flux:text>
             </div>
             <flux:button :href="route('mission-issues')" wire:navigate variant="ghost">Kembali</flux:button>
         </div>

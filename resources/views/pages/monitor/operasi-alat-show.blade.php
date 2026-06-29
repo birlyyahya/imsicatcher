@@ -84,7 +84,7 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
                 <p class="mt-1 font-medium">{{ $operasiAlat->lokasi_keterangan ?: ($operasiAlat->lokasi ?: '-') }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Masalah Misi Terkait</p>
+                <p class="text-xs uppercase text-zinc-500">Incident Terkait</p>
                 <p class="mt-1 font-medium">
                     @if ($operasiAlat->missionIssue)
                         <a href="{{ route('mission-issues.show', $operasiAlat->missionIssue) }}" wire:navigate class="text-blue-600 hover:underline">

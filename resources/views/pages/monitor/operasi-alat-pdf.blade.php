@@ -110,7 +110,7 @@
         </tr>
         @if ($operasiAlat->missionIssue)
             <tr>
-                <td class="label">Terkait Masalah Misi</td><td class="sep">:</td>
+                <td class="label">Terkait Incident</td><td class="sep">:</td>
                 <td class="value">#{{ $operasiAlat->missionIssue->id }} — {{ $operasiAlat->missionIssue->jenis ?: '-' }}</td>
             </tr>
         @endif

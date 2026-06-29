@@ -32,7 +32,7 @@
         <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
             <flux:heading size="xl">Dashboard Monitoring IMSI Catcher</flux:heading>
             <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-                Ringkasan cepat operasional: masalah misi, aktivitas pengguna, dan kesehatan alur monitoring.
+                Ringkasan cepat operasional: incident, aktivitas pengguna, dan kesehatan alur monitoring.
             </flux:text>
         </header>
 
@@ -51,7 +51,7 @@
             </div>
             @endunless
             <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Masalah Misi</div>
+                <div class="text-xs uppercase text-zinc-500">Incidents</div>
                 <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($totalIssues) }}</div>
                 <div class="mt-1 text-xs text-zinc-500">Baru {{ $issuesBaru }} | Proses {{ $issuesProses }} | Selesai {{ $issuesSelesai }}</div>
             </div>
@@ -72,7 +72,7 @@
                 <flux:heading size="lg">Aksi Cepat</flux:heading>
             </div>
             <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
-                <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary">Tambah Masalah Misi</flux:button>
+                <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary">Tambah Incidents</flux:button>
                 <flux:button :href="route('mission-issues')" wire:navigate variant="ghost">Lihat Daftar Misi</flux:button>
                 <flux:button :href="route('logs')" wire:navigate variant="ghost">Monitor Log</flux:button>
                 @unless ($authUser->isOperator())
@@ -85,7 +85,7 @@
         <div class="grid gap-4 lg:grid-cols-2">
             <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
                 <div class="mb-3 flex items-center justify-between">
-                    <flux:heading size="lg">Masalah Misi Terbaru</flux:heading>
+                    <flux:heading size="lg">Incident Terbaru</flux:heading>
                     <a href="{{ route('mission-issues') }}" wire:navigate class="text-sm text-blue-600 hover:underline">Lihat semua</a>
                 </div>
 
@@ -119,7 +119,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-3 py-5 text-center text-zinc-500">Belum ada masalah misi.</td>
+                                    <td colspan="4" class="px-3 py-5 text-center text-zinc-500">Belum ada Incident.</td>
                                 </tr>
                             @endforelse
                         </tbody>

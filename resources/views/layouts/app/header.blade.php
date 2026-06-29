@@ -18,7 +18,7 @@
                     {{ __('Network Traffic') }}
                 </flux:navbar.item>
                 <flux:navbar.item icon="folder" :href="route('mission-issues')" :current="request()->routeIs('mission-issues*')" wire:navigate>
-                    {{ __('Masalah Misi') }}
+                    {{ __('Incidents') }}
                 </flux:navbar.item>
                 <flux:navbar.item icon="cpu-chip" :href="route('operasi-alat')" :current="request()->routeIs('operasi-alat*')" wire:navigate>
                     {{ __('Log Operasi Alat') }}
@@ -88,7 +88,7 @@
                         {{ __('Network Traffic') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="plus" :href="route('mission-issues')" :current="request()->routeIs('mission-issues*')" wire:navigate>
-                        {{ __('Masalah Misi') }}
+                        {{ __('Incident') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="cpu-chip" :href="route('operasi-alat')" :current="request()->routeIs('operasi-alat*')" wire:navigate>
                         {{ __('Log Operasi Alat') }}

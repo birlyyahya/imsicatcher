@@ -146,7 +146,7 @@ new #[Layout('layouts.app'), Title('Tambah Log Operasi Alat')] class extends Com
         $this->showMissionIssueForm = false;
         $this->resetMissionIssueForm();
 
-        Toaster::success('Masalah Misi baru berhasil dibuat dan disambungkan');
+        Toaster::success('Incident baru berhasil dibuat dan disambungkan');
     }
 
     protected function rules(): array
@@ -300,9 +300,9 @@ new #[Layout('layouts.app'), Title('Tambah Log Operasi Alat')] class extends Com
 
             <div>
                 <div class="mb-1 flex items-center justify-between gap-2">
-                    <label class="block text-sm font-medium">Masalah Misi Terkait (opsional)</label>
+                    <label class="block text-sm font-medium">Incident Terkait (opsional)</label>
                     <flux:button type="button" size="sm" variant="ghost" icon="plus" wire:click="toggleMissionIssueForm">
-                        {{ $showMissionIssueForm ? 'Tutup' : 'Buat Masalah Misi Baru' }}
+                        {{ $showMissionIssueForm ? 'Tutup' : 'Buat Incident Baru' }}
                     </flux:button>
                 </div>
                 <flux:select wire:model="missionIssueId">
@@ -317,7 +317,7 @@ new #[Layout('layouts.app'), Title('Tambah Log Operasi Alat')] class extends Com
                     @php($lockedSatker = auth()->user()->isSuperadmin() ? ($this->satkerOptions[$satkerId] ?? '') : auth()->user()->satker)
                     <div x-data @keydown.enter.prevent class="mt-3 space-y-3 rounded-xl border border-dashed border-zinc-300 bg-zinc-50 p-4 dark:border-zinc-600 dark:bg-zinc-800/50">
                         <div class="flex items-center justify-between gap-2">
-                            <flux:heading size="sm">Masalah Misi Baru</flux:heading>
+                            <flux:heading size="sm">Incident Baru</flux:heading>
                             <flux:text class="text-xs text-zinc-500">Langsung tersimpan & tersambung, walau form alat belum disimpan.</flux:text>
                         </div>
 
@@ -361,7 +361,7 @@ new #[Layout('layouts.app'), Title('Tambah Log Operasi Alat')] class extends Com
                         </div>
 
                         <div class="flex items-center gap-2">
-                            <flux:button type="button" size="sm" variant="primary" wire:click="createMissionIssue">Simpan Masalah Misi</flux:button>
+                            <flux:button type="button" size="sm" variant="primary" wire:click="createMissionIssue">Simpan Incident</flux:button>
                             <flux:button type="button" size="sm" variant="ghost" wire:click="toggleMissionIssueForm">Batal</flux:button>
                         </div>
                     </div>
