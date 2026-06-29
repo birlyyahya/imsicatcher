@@ -146,6 +146,10 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
 
         $data = $this->validate($rules);
 
+        // Resolusikan satker_id (FK) dari nama satker terpilih agar konsisten dgn
+        // kolom `satker` string. Modul Operasi Alat/Aset memakai satker_id ini.
+        $satkerId = Satker::query()->where('nama', $data['satker'])->value('id');
+
         if ($this->editingUserId) {
             $user = User::findOrFail($this->editingUserId);
             $user->name = $data['name'];
@@ -153,6 +157,7 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
             $user->email = $data['email'];
             $user->role = $data['role'];
             $user->satker = $data['satker'];
+            $user->satker_id = $satkerId;
             if (!empty($data['password'])) {
                 $user->password = $data['password'];
             }
@@ -166,6 +171,7 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
                 'email' => $data['email'],
                 'role' => $data['role'],
                 'satker' => $data['satker'],
+                'satker_id' => $satkerId,
                 'password' => $data['password'],
             ]);
 
