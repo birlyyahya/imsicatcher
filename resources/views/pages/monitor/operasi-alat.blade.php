@@ -10,6 +10,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Masmerise\Toaster\Toaster;
 
 new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
 {
@@ -118,6 +119,23 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
             ->when($this->filterTanggalSampai !== '', fn (Builder $query) => $query->whereDate('waktu_mulai', '<=', $this->filterTanggalSampai))
             ->latest('waktu_mulai')
             ->paginate($this->perPage);
+    }
+
+    /**
+     * Hapus log operasi alat. Hanya boleh oleh pembuat (operator), admin satker,
+     * atau superadmin — sama dengan aturan isManageableBy.
+     */
+    public function delete(OperasiAlat $log): void
+    {
+        abort_unless($log->isManageableBy(auth()->user()), 403);
+
+        if ($log->foto_bukti && Storage::disk('public')->exists($log->foto_bukti)) {
+            Storage::disk('public')->delete($log->foto_bukti);
+        }
+
+        $log->delete();
+
+        Toaster::success('Log operasi alat berhasil dihapus.');
     }
 
     public function render(): View
@@ -254,6 +272,7 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                                 <td class="px-3 py-3 space-x-2 whitespace-nowrap">
                                     <flux:button href="{{ route('operasi-alat.edit', $log) }}" variant="outline" size="sm" wire:navigate>Edit</flux:button>
                                     <flux:button href="{{ route('operasi-alat.show', $log) }}" variant="primary" size="sm" wire:navigate>Lihat</flux:button>
+                                    <flux:button variant="danger" size="sm" wire:click="delete({{ $log->id }})" wire:confirm="Yakin hapus log operasi alat ini? Tindakan ini tidak dapat dibatalkan.">Hapus</flux:button>
                                 </td>
                             </tr>
                         @empty

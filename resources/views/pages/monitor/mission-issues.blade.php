@@ -9,6 +9,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Masmerise\Toaster\Toaster;
 
 new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
 {
@@ -81,6 +82,24 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
             ->when($this->filterJenis !== '', fn (Builder $query) => $query->where('jenis', $this->filterJenis))
             ->latest('tanggal')
             ->paginate($this->perPage);
+    }
+
+    /**
+     * Hapus masalah misi. Hanya boleh oleh pembuat, admin satker, atau
+     * superadmin — sama dengan aturan isManageableBy. Log operasi alat terkait
+     * akan ter-set mission_issue_id = null (FK nullOnDelete), tidak ikut terhapus.
+     */
+    public function delete(MissionIssue $issue): void
+    {
+        abort_unless($issue->isManageableBy(auth()->user()), 403);
+
+        if ($issue->foto_bukti && Storage::disk('public')->exists($issue->foto_bukti)) {
+            Storage::disk('public')->delete($issue->foto_bukti);
+        }
+
+        $issue->delete();
+
+        Toaster::success('Masalah misi berhasil dihapus.');
     }
 
     public function render(): View
@@ -209,6 +228,7 @@ new #[Layout('layouts.app'), Title('Masalah Misi')] class extends Component
                                     <td class="px-3 py-3 space-x-2 whitespace-nowrap">
                                         <flux:button href="{{ route('mission-issues.edit', $issue) }}" variant="outline" size="sm" wire:navigate>Edit</flux:button>
                                     <flux:button href="{{ route('mission-issues.show', $issue) }}" variant="primary" size="sm" wire:navigate>Lihat</flux:button>
+                                    <flux:button variant="danger" size="sm" wire:click="delete({{ $issue->id }})" wire:confirm="Yakin hapus masalah misi ini? Tindakan ini tidak dapat dibatalkan.">Hapus</flux:button>
                                 </td>
                             </tr>
                         @empty
