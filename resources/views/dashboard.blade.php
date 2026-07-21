@@ -29,69 +29,56 @@
 
 <x-layouts::app :title="__('Dashboard')">
     <div class="space-y-6">
-        <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        {{-- Hero + statistik menyatu sebagai tile glass --}}
+        <header class="page-hero">
             <flux:heading size="xl">Dashboard Monitoring IMSI Catcher</flux:heading>
-            <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            <flux:text class="mt-1 text-sm">
                 Ringkasan cepat operasional: incident, aktivitas pengguna, dan kesehatan alur monitoring.
             </flux:text>
-        </header>
 
-        <div class="grid gap-4 md:grid-cols-4">
-            @unless ($authUser->isOperator())
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Total User{{ $authUser->isAdmin() ? ' (Satker Anda)' : '' }}</div>
-                <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($totalUsers) }}</div>
-                <div class="mt-1 text-xs text-zinc-500">
-                    @if ($authUser->isSuperadmin())
-                        Operator {{ $operatorCount }} | Admin {{ $adminCount }} | Superadmin {{ $superadminCount }}
-                    @else
-                        Operator {{ $operatorCount }} | Admin {{ $adminCount }}
-                    @endif
+            <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                @unless ($authUser->isOperator())
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Total User{{ $authUser->isAdmin() ? ' (Satker Anda)' : '' }}</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($totalUsers) }}</div>
+                    <div class="mt-1 text-xs text-indigo-200/60">
+                        @if ($authUser->isSuperadmin())
+                            Operator {{ $operatorCount }} | Admin {{ $adminCount }} | Superadmin {{ $superadminCount }}
+                        @else
+                            Operator {{ $operatorCount }} | Admin {{ $adminCount }}
+                        @endif
+                    </div>
+                </div>
+                @endunless
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Incidents</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($totalIssues) }}</div>
+                    <div class="mt-1 text-xs text-indigo-200/60">Baru {{ $issuesBaru }} | Proses {{ $issuesProses }} | Selesai {{ $issuesSelesai }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Total Aktivitas</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($totalLogs) }}</div>
+                    <div class="mt-1 text-xs text-indigo-200/60">Log hari ini: {{ number_format($logsToday) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Aksi Penghapusan</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($logsDelete) }}</div>
+                    <div class="mt-1 text-xs text-indigo-200/60">Total aksi delete terekam</div>
                 </div>
             </div>
-            @endunless
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Incidents</div>
-                <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($totalIssues) }}</div>
-                <div class="mt-1 text-xs text-zinc-500">Baru {{ $issuesBaru }} | Proses {{ $issuesProses }} | Selesai {{ $issuesSelesai }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Total Aktivitas</div>
-                <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($totalLogs) }}</div>
-                <div class="mt-1 text-xs text-zinc-500">Log hari ini: {{ number_format($logsToday) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Aksi Penghapusan</div>
-                <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($logsDelete) }}</div>
-                <div class="mt-1 text-xs text-zinc-500">Total aksi delete terekam</div>
-            </div>
-        </div>
+        </header>
 
-        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="mb-3">
-                <flux:heading size="lg">Aksi Cepat</flux:heading>
-            </div>
-            <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
-                <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary">Tambah Incidents</flux:button>
-                <flux:button :href="route('mission-issues')" wire:navigate variant="ghost">Lihat Daftar Misi</flux:button>
-                <flux:button :href="route('logs')" wire:navigate variant="ghost">Monitor Log</flux:button>
-                @unless ($authUser->isOperator())
-                    <flux:button :href="route('users')" wire:navigate variant="ghost">Kelola User</flux:button>
-                @endunless
-                <flux:button :href="route('network-traffic')" wire:navigate variant="ghost">Network Traffic</flux:button>
-            </div>
-        </section>
-
-        <div class="grid gap-4 lg:grid-cols-2">
-            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        {{-- Grid asimetris: konten utama kiri, panel aksi & aktivitas kanan --}}
+        <div class="grid gap-6 lg:grid-cols-3">
+            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm lg:col-span-2 dark:border-zinc-700 dark:bg-zinc-900">
                 <div class="mb-3 flex items-center justify-between">
                     <flux:heading size="lg">Incident Terbaru</flux:heading>
-                    <a href="{{ route('mission-issues') }}" wire:navigate class="text-sm text-blue-600 hover:underline">Lihat semua</a>
+                    <a href="{{ route('mission-issues') }}" wire:navigate class="text-sm text-indigo-600 hover:underline">Lihat semua</a>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
-                        <thead class="bg-zinc-100 text-left text-xs uppercase text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                        <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                             <tr>
                                 <th class="px-3 py-2">Tanggal</th>
                                 <th class="px-3 py-2">Lokasi</th>
@@ -101,8 +88,8 @@
                         </thead>
                         <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
                             @forelse ($recentIssues as $issue)
-                                <tr>
-                                    <td class="px-3 py-2 whitespace-nowrap">{{ $issue->tanggal?->format('d-m-Y H:i') }}</td>
+                                <tr class="transition-colors hover:bg-indigo-50/40 dark:hover:bg-zinc-800/70">
+                                    <td class="px-3 py-2 font-mono text-xs whitespace-nowrap">{{ $issue->tanggal?->format('d-m-Y H:i') }}</td>
                                     <td class="px-3 py-2">{{ $issue->lokasi }}</td>
                                     <td class="px-3 py-2">
                                         @if ($issue->status === 'selesai')
@@ -114,7 +101,7 @@
                                         @endif
                                     </td>
                                     <td class="px-3 py-2">
-                                        <a href="{{ route('mission-issues.show', $issue) }}" wire:navigate class="text-blue-600 hover:underline">Detail</a>
+                                        <a href="{{ route('mission-issues.show', $issue) }}" wire:navigate class="text-indigo-600 hover:underline">Detail</a>
                                     </td>
                                 </tr>
                             @empty
@@ -127,30 +114,48 @@
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="mb-3 flex items-center justify-between">
-                    <flux:heading size="lg">Aktivitas Terbaru</flux:heading>
-                    <a href="{{ route('logs') }}" wire:navigate class="text-sm text-blue-600 hover:underline">Buka log</a>
-                </div>
+            <div class="space-y-6">
+                <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                    <div class="mb-3">
+                        <flux:heading size="lg">Aksi Cepat</flux:heading>
+                    </div>
+                    <div class="grid gap-2">
+                        <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary" icon="plus" class="justify-start!">Tambah Incidents</flux:button>
+                        <flux:button :href="route('mission-issues')" wire:navigate variant="ghost" icon="folder" class="justify-start!">Lihat Daftar Misi</flux:button>
+                        <flux:button :href="route('logs')" wire:navigate variant="ghost" icon="inbox-arrow-down" class="justify-start!">Monitor Log</flux:button>
+                        @unless ($authUser->isOperator())
+                            <flux:button :href="route('users')" wire:navigate variant="ghost" icon="users" class="justify-start!">Kelola User</flux:button>
+                        @endunless
+                        <flux:button :href="route('network-traffic')" wire:navigate variant="ghost" icon="signal" class="justify-start!">Network Traffic</flux:button>
+                    </div>
+                </section>
 
-                <div class="space-y-3">
-                    @forelse ($recentLogs as $log)
-                        <div class="rounded-lg border border-zinc-200 px-3 py-2 dark:border-zinc-700">
-                            <div class="flex items-start justify-between gap-2">
-                                <div>
-                                    <div class="text-sm font-medium">{{ $log->user_name ?: 'Guest' }} - {{ $log->description }}</div>
-                                    <div class="text-xs text-zinc-500">{{ $log->agent ?: '-' }} | {{ $log->ip_address ?: '-' }}</div>
+                <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                    <div class="mb-3 flex items-center justify-between">
+                        <flux:heading size="lg">Aktivitas Terbaru</flux:heading>
+                        <a href="{{ route('logs') }}" wire:navigate class="text-sm text-indigo-600 hover:underline">Buka log</a>
+                    </div>
+
+                    <ol class="relative space-y-4 border-s border-zinc-200 ps-4 dark:border-zinc-700">
+                        @forelse ($recentLogs as $log)
+                            <li class="relative">
+                                <span class="absolute -left-[21.5px] top-1.5 size-2.5 rounded-full bg-indigo-500 ring-4 ring-indigo-100 dark:ring-zinc-800"></span>
+                                <div class="flex items-start justify-between gap-2">
+                                    <div class="min-w-0">
+                                        <div class="truncate text-sm font-medium">{{ $log->user_name ?: 'Guest' }} - {{ $log->description }}</div>
+                                        <div class="truncate text-xs text-zinc-500">{{ $log->agent ?: '-' }} | {{ $log->ip_address ?: '-' }}</div>
+                                    </div>
+                                    <div class="font-mono text-xs whitespace-nowrap text-zinc-500">{{ $log->logged_at?->format('d-m H:i:s') }}</div>
                                 </div>
-                                <div class="text-xs whitespace-nowrap text-zinc-500">{{ $log->logged_at?->format('d-m H:i:s') }}</div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="rounded-lg border border-zinc-200 px-3 py-4 text-center text-sm text-zinc-500 dark:border-zinc-700">
-                            Belum ada aktivitas yang tercatat.
-                        </div>
-                    @endforelse
-                </div>
-            </section>
+                            </li>
+                        @empty
+                            <li class="relative text-sm text-zinc-500">
+                                Belum ada aktivitas yang tercatat.
+                            </li>
+                        @endforelse
+                    </ol>
+                </section>
+            </div>
         </div>
     </div>
 </x-layouts::app>

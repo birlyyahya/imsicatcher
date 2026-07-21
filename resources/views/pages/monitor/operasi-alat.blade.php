@@ -147,34 +147,43 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
 ?>
 <div>
     <div class="space-y-6">
-        <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:heading size="xl">Log Operasi Alat</flux:heading>
-            <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-                Catat dan pantau setiap penggunaan alat operasi beserta hasilnya.
-            </flux:text>
+        <header class="page-hero">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <flux:heading size="xl">Log Operasi Alat</flux:heading>
+                    <flux:text class="mt-1 text-sm">
+                        Catat dan pantau setiap penggunaan alat operasi beserta hasilnya.
+                    </flux:text>
+                </div>
+                <flux:button :href="route('operasi-alat.create')" wire:navigate variant="primary" icon="plus">Tambah Log</flux:button>
+            </div>
+
+            <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Total Log</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($this->stats['total']) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Berhasil</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-emerald-300">{{ number_format($this->stats['berhasil']) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Gagal</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-red-300">{{ number_format($this->stats['gagal']) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Sebagian</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-amber-300">{{ number_format($this->stats['sebagian']) }}</div>
+                </div>
+            </div>
         </header>
 
-        <div class="grid gap-4 md:grid-cols-4">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Total Log</div>
-                <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($this->stats['total']) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Berhasil</div>
-                <div class="mt-2 text-2xl font-bold text-green-500">{{ number_format($this->stats['berhasil']) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Gagal</div>
-                <div class="mt-2 text-2xl font-bold text-red-500">{{ number_format($this->stats['gagal']) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Sebagian</div>
-                <div class="mt-2 text-2xl font-bold text-yellow-500">{{ number_format($this->stats['sebagian']) }}</div>
-            </div>
-        </div>
-
         <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <form class="flex flex-wrap items-end gap-2">
+            <div class="mb-4">
+                <flux:heading size="lg">Daftar Log Operasi Alat</flux:heading>
+            </div>
+
+            <form class="mb-4 flex flex-wrap items-end gap-2 rounded-xl bg-zinc-50 p-3 ring-1 ring-zinc-200/70 dark:bg-zinc-800/50 dark:ring-zinc-700">
                 <flux:input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari lokasi / tujuan ..." class="w-full md:w-auto" />
                 <flux:select wire:model.live="filterJenisAlat" class="w-full md:w-auto">
                     <flux:select.option value="">Semua Jenis Alat</flux:select.option>
@@ -202,17 +211,10 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                     Reset
                 </flux:button>
             </form>
-        </section>
-
-        <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="mb-3 flex items-center justify-between">
-                <flux:heading size="lg">Daftar Log Operasi Alat</flux:heading>
-                <flux:button :href="route('operasi-alat.create')" wire:navigate variant="primary">Tambah Log</flux:button>
-            </div>
 
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm">
-                    <thead class="bg-zinc-100 text-left text-xs uppercase text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                         <tr>
                             <th class="px-3 py-3 font-semibold">Waktu Mulai</th>
                             <th class="px-3 py-3 font-semibold">Waktu Selesai</th>
@@ -229,16 +231,16 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
                         @forelse ($this->logs as $log)
-                            <tr class="align-top hover:bg-zinc-50 dark:hover:bg-zinc-800/70">
-                                <td class="px-3 py-3 whitespace-nowrap">{{ $log->waktu_mulai?->format('d-m-Y H:i') }}</td>
-                                <td class="px-3 py-3 whitespace-nowrap">{{ $log->waktu_selesai?->format('d-m-Y H:i') ?? '-' }}</td>
+                            <tr class="align-top transition-colors hover:bg-indigo-50/40 dark:hover:bg-zinc-800/70">
+                                <td class="px-3 py-3 font-mono text-xs whitespace-nowrap">{{ $log->waktu_mulai?->format('d-m-Y H:i') }}</td>
+                                <td class="px-3 py-3 font-mono text-xs whitespace-nowrap">{{ $log->waktu_selesai?->format('d-m-Y H:i') ?? '-' }}</td>
                                 <td class="px-3 py-3">{{ $log->jenisAlatLabel() }}</td>
                                 <td class="px-3 py-3">{{ $log->operator?->name ?? '-' }}</td>
                                 <td class="px-3 py-3">{{ $log->satker?->nama ?? '-' }}</td>
                                 <td class="px-3 py-3">
                                     <div>{{ $log->lokasi_keterangan ?: ($log->lokasi ?: '-') }}</div>
                                     @if (filled($log->latitude) && filled($log->longitude))
-                                        <a href="{{ route('operasi-alat.show', $log) }}" wire:navigate class="mt-0.5 inline-flex items-center gap-1 text-xs text-blue-600 hover:underline">
+                                        <a href="{{ route('operasi-alat.show', $log) }}" wire:navigate class="mt-0.5 inline-flex items-center gap-1 text-xs text-indigo-600 hover:underline">
                                             <flux:icon name="map-pin" class="size-3.5" /> Lihat Lokasi
                                         </a>
                                     @endif
@@ -255,16 +257,16 @@ new #[Layout('layouts.app'), Title('Log Operasi Alat')] class extends Component
                                         -
                                     @endif
                                 </td>
-                                <td class="px-3 py-3 whitespace-nowrap">
+                                <td class="px-3 py-3 font-mono text-xs whitespace-nowrap">
                                     @if ($log->mission_issue_id)
-                                        <a href="{{ route('mission-issues.show', $log->mission_issue_id) }}" wire:navigate class="text-blue-600 hover:underline">#{{ $log->mission_issue_id }}</a>
+                                        <a href="{{ route('mission-issues.show', $log->mission_issue_id) }}" wire:navigate class="text-indigo-600 hover:underline">#{{ $log->mission_issue_id }}</a>
                                     @else
                                         -
                                     @endif
                                 </td>
                                 <td class="px-3 py-3">
                                     @if ($log->foto_bukti)
-                                        <a href="{{ Storage::url($log->foto_bukti) }}" target="_blank" class="text-blue-600 hover:underline">Lihat</a>
+                                        <a href="{{ Storage::url($log->foto_bukti) }}" target="_blank" class="text-indigo-600 hover:underline">Lihat</a>
                                     @else
                                         -
                                     @endif

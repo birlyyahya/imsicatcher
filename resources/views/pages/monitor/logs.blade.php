@@ -134,33 +134,39 @@ new #[Layout('layouts.app'), Title('Log Aktivitas')] class extends Component
 
 ?>
 <div class="space-y-6">
-    <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <header class="page-hero">
         <flux:heading size="xl">Log Aktivitas Sistem</flux:heading>
-        <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+        <flux:text class="mt-1 text-sm">
             Semua aktivitas website tercatat otomatis, termasuk navigasi halaman dan aksi pada komponen Livewire.
         </flux:text>
+
+        <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Total Log</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($this->stats['total']) }}</div>
+            </div>
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Hari Ini</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-sky-300">{{ number_format($this->stats['today']) }}</div>
+            </div>
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">User Aktif Tercatat</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-emerald-300">{{ number_format($this->stats['users']) }}</div>
+            </div>
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Aksi Livewire</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-violet-300">{{ number_format($this->stats['livewire']) }}</div>
+            </div>
+        </div>
     </header>
 
-    <div class="grid gap-4 md:grid-cols-4">
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Total Log</div>
-            <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($this->stats['total']) }}</div>
-        </div>
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Hari Ini</div>
-            <div class="mt-2 text-2xl font-bold text-blue-500">{{ number_format($this->stats['today']) }}</div>
-        </div>
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">User Aktif Tercatat</div>
-            <div class="mt-2 text-2xl font-bold text-emerald-500">{{ number_format($this->stats['users']) }}</div>
-        </div>
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Aksi Livewire</div>
-            <div class="mt-2 text-2xl font-bold text-violet-500">{{ number_format($this->stats['livewire']) }}</div>
-        </div>
-    </div>
-
     <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <div class="mb-4 flex items-center justify-between">
+            <flux:heading size="lg">Daftar Aktivitas</flux:heading>
+            <flux:text class="text-xs text-zinc-500">Menampilkan data terbaru terlebih dahulu.</flux:text>
+        </div>
+
+        <div class="mb-4 rounded-xl bg-zinc-50 p-3 ring-1 ring-zinc-200/70 dark:bg-zinc-800/50 dark:ring-zinc-700">
         <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-6">
             <flux:input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari deskripsi/user/ip..." class="lg:col-span-2" />
 
@@ -185,17 +191,11 @@ new #[Layout('layouts.app'), Title('Log Aktivitas')] class extends Component
         <div class="mt-3">
             <flux:button wire:click="resetFilters" type="button" variant="ghost">Reset Filter</flux:button>
         </div>
-    </section>
-
-    <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <div class="mb-3 flex items-center justify-between">
-            <flux:heading size="lg">Daftar Aktivitas</flux:heading>
-            <flux:text class="text-xs text-zinc-500">Menampilkan data terbaru terlebih dahulu.</flux:text>
         </div>
 
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
-                <thead class="bg-zinc-100 text-left text-xs uppercase text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                     <tr>
                         <th class="px-3 py-3 font-semibold">Waktu</th>
                         <th class="px-3 py-3 font-semibold">User</th>
@@ -207,8 +207,8 @@ new #[Layout('layouts.app'), Title('Log Aktivitas')] class extends Component
                 </thead>
                 <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
                     @forelse ($this->logs as $log)
-                        <tr class="align-top hover:bg-zinc-50 dark:hover:bg-zinc-800/70">
-                            <td class="px-3 py-3 whitespace-nowrap">{{ $log->logged_at?->format('d-m-Y H:i:s') }}</td>
+                        <tr class="align-top transition-colors hover:bg-indigo-50/40 dark:hover:bg-zinc-800/70">
+                            <td class="px-3 py-3 font-mono text-xs whitespace-nowrap">{{ $log->logged_at?->format('d-m-Y H:i:s') }}</td>
                             <td class="px-3 py-3">{{ $log->user_name ?: 'Guest' }}</td>
                             <td class="px-3 py-3">
                                 @if (str_starts_with($log->action, 'livewire:'))
@@ -224,7 +224,7 @@ new #[Layout('layouts.app'), Title('Log Aktivitas')] class extends Component
                                 @endif
                             </td>
                             <td class="px-3 py-3">{{ $log->agent ?: '-' }}</td>
-                            <td class="px-3 py-3">{{ $log->ip_address ?: '-' }}</td>
+                            <td class="px-3 py-3 font-mono text-xs">{{ $log->ip_address ?: '-' }}</td>
                             <td class="px-3 py-3 max-w-xl">{{ $log->description ?: '-' }}</td>
                         </tr>
                     @empty

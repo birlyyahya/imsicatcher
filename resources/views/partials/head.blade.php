@@ -10,7 +10,14 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.bunny.net">
-<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600|space-grotesk:500,600,700|jetbrains-mono:400,500" rel="stylesheet" />
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
+<script>
+    // Default tema terang: hanya berlaku bila user belum memilih appearance
+    // sendiri lewat halaman Settings > Appearance.
+    if (! localStorage.getItem('flux.appearance')) {
+        localStorage.setItem('flux.appearance', 'light');
+    }
+</script>
 @fluxAppearance

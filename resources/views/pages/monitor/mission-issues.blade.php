@@ -111,11 +111,35 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
 ?>
 <div>
     <div class="space-y-6">
-        <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:heading size="xl">Incidents</flux:heading>
-            <flux:text class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-                Pantau, tindak lanjuti, dan dokumentasikan setiap kejadian yang mempengaruhi misi.
-            </flux:text>
+        <header class="page-hero">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+                <div>
+                    <flux:heading size="xl">Incidents</flux:heading>
+                    <flux:text class="mt-1 text-sm">
+                        Pantau, tindak lanjuti, dan dokumentasikan setiap kejadian yang mempengaruhi misi.
+                    </flux:text>
+                </div>
+                <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary" icon="plus">Tambah Misi</flux:button>
+            </div>
+
+            <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Total Laporan</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($this->stats['total']) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Baru</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-amber-300">{{ number_format($this->stats['baru']) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Dalam Proses</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-sky-300">{{ number_format($this->stats['proses']) }}</div>
+                </div>
+                <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                    <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Selesai</div>
+                    <div class="mt-1 font-display text-3xl font-bold tracking-tight text-emerald-300">{{ number_format($this->stats['selesai']) }}</div>
+                </div>
+            </div>
         </header>
 
         @if (session('success'))
@@ -133,27 +157,10 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
             </div>
         @endif
 
-        <div class="grid gap-4 md:grid-cols-4">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Total Laporan</div>
-                <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($this->stats['total']) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Baru</div>
-                <div class="mt-2 text-2xl font-bold text-yellow-500">{{ number_format($this->stats['baru']) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Dalam Proses</div>
-                <div class="mt-2 text-2xl font-bold text-blue-500">{{ number_format($this->stats['proses']) }}</div>
-            </div>
-            <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="text-xs uppercase text-zinc-500">Selesai</div>
-                <div class="mt-2 text-2xl font-bold text-green-500">{{ number_format($this->stats['selesai']) }}</div>
-            </div>
-        </div>
-
         <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <form class="flex flex-wrap items-center gap-2">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <flux:heading size="lg">Daftar Incidents</flux:heading>
+                <form class="flex flex-wrap items-center gap-2">
                 <flux:input wire:model.live.debounce.300ms="search" type="text" placeholder="Cari Incident ..." class="w-full md:w-auto" />
                 <flux:select wire:model.live="filterStatus" class="w-full md:w-auto">
                     <flux:select.option value="">Semua Status</flux:select.option>
@@ -170,18 +177,12 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
                 <flux:button type="button" variant="ghost" wire:click="$set('search', ''); $set('filterStatus', ''); $set('filterJenis', '')">
                     Reset
                 </flux:button>
-            </form>
-        </section>
-
-        <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="mb-3 flex items-center justify-between">
-                <flux:heading size="lg">Daftar Incidents</flux:heading>
-                <flux:button :href="route('mission-issues.create')" wire:navigate variant="primary">Tambah Misi</flux:button>
+                </form>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm">
-                    <thead class="bg-zinc-100 text-left text-xs uppercase text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                         <tr>
                             <th class="px-3 py-3 font-semibold">Tanggal</th>
                             <th class="px-3 py-3 font-semibold">Lokasi</th>
@@ -199,8 +200,8 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
                         @forelse ($this->issues as $issue)
-                            <tr class="align-top hover:bg-zinc-50 dark:hover:bg-zinc-800/70">
-                                <td class="px-3 py-3 whitespace-nowrap">{{ $issue->tanggal?->format('d-m-Y H:i') }}</td>
+                            <tr class="align-top transition-colors hover:bg-indigo-50/40 dark:hover:bg-zinc-800/70">
+                                <td class="px-3 py-3 font-mono text-xs whitespace-nowrap">{{ $issue->tanggal?->format('d-m-Y H:i') }}</td>
                                 <td class="px-3 py-3">{{ $issue->lokasi }}</td>
                                 <td class="px-3 py-3">{{ $issue->jenis }}</td>
                                 <td class="px-3 py-3 max-w-xs">{{ \Illuminate\Support\Str::limit($issue->deskripsi, 90) }}</td>
@@ -219,7 +220,7 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
                                 </td>
                                 <td class="px-3 py-3">
                                     @if ($issue->foto_bukti)
-                                        <a href="{{ Storage::url($issue->foto_bukti) }}" target="_blank" class="text-blue-600 hover:underline">Lihat</a>
+                                        <a href="{{ Storage::url($issue->foto_bukti) }}" target="_blank" class="text-indigo-600 hover:underline">Lihat</a>
                                     @else
                                         -
                                     @endif

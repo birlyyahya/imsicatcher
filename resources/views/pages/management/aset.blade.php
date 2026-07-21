@@ -188,17 +188,17 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 <section class="space-y-6">
 
     {{-- HEADER --}}
-    <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="page-hero">
         <flux:heading size="xl">Inventaris Aset</flux:heading>
-        <flux:text class="text-sm text-zinc-500">Kelola master data aset operasional per satuan kerja.</flux:text>
+        <flux:text class="text-sm">Kelola master data aset operasional per satuan kerja.</flux:text>
     </div>
 
-    {{-- MAIN --}}
+    {{-- MAIN: tabel di kiri, form sticky di kanan --}}
     <div class="grid gap-6 lg:grid-cols-3">
 
         {{-- FORM --}}
-        <div class="lg:col-span-1">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <div class="lg:order-2 lg:col-span-1">
+            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
                 <flux:heading size="lg" class="mb-4">
                     {{ $editingAsetId ? 'Edit Aset' : 'Tambah Aset' }}
                 </flux:heading>
@@ -257,7 +257,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 
                     <div>
                         <label class="mb-1 block text-sm font-medium">Catatan</label>
-                        <textarea wire:model="catatan" rows="3" placeholder="Catatan (opsional)" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <textarea wire:model="catatan" rows="3" placeholder="Catatan (opsional)" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                         @error('catatan') <p class="text-xs text-red-500">{{ $message }}</p> @enderror
                     </div>
 
@@ -277,7 +277,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
         </div>
 
         {{-- TABLE --}}
-        <div class="lg:col-span-2">
+        <div class="lg:order-1 lg:col-span-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
 
                 <div class="mb-4 flex items-center justify-between">
@@ -313,7 +313,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                        <thead class="bg-indigo-50/80 text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                             <tr>
                                 <th class="px-3 py-2 text-left">Nama Aset</th>
                                 <th class="px-3 py-2 text-left">Kategori</th>
@@ -326,7 +326,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 
                         <tbody>
                             @forelse($this->asets as $aset)
-                            <tr class="border-b border-zinc-200 hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">
+                            <tr class="border-b border-zinc-200 transition-colors hover:bg-indigo-50/40 dark:border-zinc-700 dark:hover:bg-zinc-800">
                                 <td class="px-3 py-2 font-medium text-zinc-900 dark:text-zinc-100">{{ $aset->nama_aset }}</td>
                                 <td class="px-3 py-2 text-zinc-700 dark:text-zinc-300">{{ $aset->kategoriLabel() }}</td>
                                 <td class="px-3 py-2 text-zinc-500 dark:text-zinc-400">{{ $aset->nomor_seri ?: '-' }}</td>
@@ -343,7 +343,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
                                     <p class="line-clamp-2 text-zinc-700 dark:text-zinc-300">{{ $aset->satker?->nama ?? '-' }}</p>
                                 </td>
                                 <td class="px-3 py-2 text-right space-x-2">
-                                    <flux:button size="sm" wire:click="edit({{ $aset->id }})" type="button" variant="ghost" class="px-2! py-1! text-blue-600">
+                                    <flux:button size="sm" wire:click="edit({{ $aset->id }})" type="button" variant="ghost" class="px-2! py-1! text-indigo-600">
                                         Edit
                                     </flux:button>
                                     <flux:button size="xs" wire:click="deleteAset({{ $aset->id }})" type="button" variant="danger" onclick="confirm('Hapus aset ini?') || event.stopImmediatePropagation()" class="px-2! py-1!">

@@ -115,7 +115,7 @@
                     x-model="searchQuery"
                     @keydown.enter.prevent="searchLocation()"
                     placeholder="Cari lokasi di peta (mis. Manokwari, Papua Barat)..."
-                    class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-zinc-600 dark:bg-zinc-800"
+                    class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-zinc-600 dark:bg-zinc-800"
                 />
                 <flux:button type="button" size="sm" variant="outline" icon="magnifying-glass" @click="searchLocation()">
                     <span x-text="searching ? 'Mencari...' : 'Cari'"></span>

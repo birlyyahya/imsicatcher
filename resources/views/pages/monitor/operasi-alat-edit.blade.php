@@ -237,8 +237,8 @@ new #[Layout('layouts.app'), Title('Edit Log Operasi Alat')] class extends Compo
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 @endassets
-<div class="space-y-6">
-    <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+<div class="mx-auto w-full max-w-4xl space-y-6">
+    <header class="page-hero">
         <div class="flex items-center justify-between gap-2">
             <div>
                 <flux:heading size="xl">Edit Log Operasi Alat #{{ $operasiAlat->id }}</flux:heading>
@@ -373,7 +373,7 @@ new #[Layout('layouts.app'), Title('Edit Log Operasi Alat')] class extends Compo
 
                         <div>
                             <label class="mb-1 block text-sm font-medium">Deskripsi</label>
-                            <textarea wire:model="miDeskripsi" rows="3" placeholder="Jelaskan kronologi masalah yang terjadi..." class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <textarea wire:model="miDeskripsi" rows="3" placeholder="Jelaskan kronologi masalah yang terjadi..." class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                             @error('miDeskripsi') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
                         </div>
 
@@ -387,13 +387,13 @@ new #[Layout('layouts.app'), Title('Edit Log Operasi Alat')] class extends Compo
 
             <div>
                 <label class="mb-1 block text-sm font-medium">Tujuan Operasi</label>
-                <textarea wire:model="tujuanOperasi" rows="3" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <textarea wire:model="tujuanOperasi" rows="3" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                 @error('tujuanOperasi') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
             <div>
                 <label class="mb-1 block text-sm font-medium">Catatan</label>
-                <textarea wire:model="catatan" rows="3" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <textarea wire:model="catatan" rows="3" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                 @error('catatan') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
@@ -406,12 +406,12 @@ new #[Layout('layouts.app'), Title('Edit Log Operasi Alat')] class extends Compo
 
             @if ($foto)
                 <div>
-                    <p class="mb-1 text-xs uppercase text-zinc-500">Preview Foto Baru</p>
+                    <p class="mb-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Preview Foto Baru</p>
                     <img src="{{ $foto->temporaryUrl() }}" alt="Preview foto bukti baru" class="max-h-48 rounded-lg border border-zinc-200 dark:border-zinc-700">
                 </div>
             @elseif ($existingFotoBukti)
                 <div>
-                    <p class="mb-1 text-xs uppercase text-zinc-500">Foto Saat Ini</p>
+                    <p class="mb-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Foto Saat Ini</p>
                     <img src="{{ Storage::url($existingFotoBukti) }}" alt="Foto bukti saat ini" class="max-h-48 rounded-lg border border-zinc-200 dark:border-zinc-700">
                 </div>
             @endif

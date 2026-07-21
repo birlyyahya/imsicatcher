@@ -105,17 +105,17 @@ new #[Layout('layouts.app'), Title('Manajemen Satker')] class extends Component
 <section class="space-y-6">
 
     {{-- HEADER --}}
-    <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="page-hero">
         <flux:heading size="xl">Manajemen Satker</flux:heading>
-        <flux:text class="text-sm text-zinc-500">Kelola daftar satuan kerja yang digunakan pada data misi dan user.</flux:text>
+        <flux:text class="text-sm">Kelola daftar satuan kerja yang digunakan pada data misi dan user.</flux:text>
     </div>
 
-    {{-- MAIN --}}
+    {{-- MAIN: tabel di kiri, form sticky di kanan --}}
     <div class="grid gap-6 lg:grid-cols-3">
 
         {{-- FORM --}}
-        <div class="lg:col-span-1">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <div class="lg:order-2 lg:col-span-1">
+            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
                 <flux:heading size="lg" class="mb-4">
                     {{ $editingSatkerId ? 'Edit Satker' : 'Tambah Satker' }}
                 </flux:heading>
@@ -128,7 +128,7 @@ new #[Layout('layouts.app'), Title('Manajemen Satker')] class extends Component
 
                     <div>
                         <label class="mb-1 block text-sm font-medium">Keterangan</label>
-                        <textarea wire:model="keterangan" rows="3" placeholder="Keterangan (opsional)" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <textarea wire:model="keterangan" rows="3" placeholder="Keterangan (opsional)" class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                         @error('keterangan') <p class="text-xs text-red-500">{{ $message }}</p> @enderror
                     </div>
 
@@ -148,7 +148,7 @@ new #[Layout('layouts.app'), Title('Manajemen Satker')] class extends Component
         </div>
 
         {{-- TABLE --}}
-        <div class="lg:col-span-2">
+        <div class="lg:order-1 lg:col-span-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
 
                 <div class="mb-4 flex items-center justify-between">
@@ -158,7 +158,7 @@ new #[Layout('layouts.app'), Title('Manajemen Satker')] class extends Component
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                        <thead class="bg-indigo-50/80 text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                             <tr>
                                 <th class="px-3 py-2 text-left">Nama Satker</th>
                                 <th class="px-3 py-2 text-left">Keterangan</th>
@@ -168,13 +168,13 @@ new #[Layout('layouts.app'), Title('Manajemen Satker')] class extends Component
 
                         <tbody>
                             @forelse($this->satkers as $satker)
-                            <tr class="border-b border-zinc-200 hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">
+                            <tr class="border-b border-zinc-200 transition-colors hover:bg-indigo-50/40 dark:border-zinc-700 dark:hover:bg-zinc-800">
                                 <td class="px-3 py-2 font-medium text-zinc-900 dark:text-zinc-100">{{ $satker->nama }}</td>
                                 <td class="px-3 py-2 max-w-50">
                                     <p class="line-clamp-2 text-zinc-700 dark:text-zinc-300">{{ $satker->keterangan ?: '-' }}</p>
                                 </td>
                                 <td class="px-3 py-2 text-right space-x-2">
-                                    <flux:button size="sm" wire:click="edit({{ $satker->id }})" type="button" variant="ghost" class="px-2! py-1! text-blue-600">
+                                    <flux:button size="sm" wire:click="edit({{ $satker->id }})" type="button" variant="ghost" class="px-2! py-1! text-indigo-600">
                                         Edit
                                     </flux:button>
                                     <flux:button size="xs" wire:click="deleteSatker({{ $satker->id }})" type="button" variant="danger" onclick="confirm('Hapus satker ini?') || event.stopImmediatePropagation()" class="px-2! py-1!">

@@ -25,7 +25,7 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
 
 ?>
 <div class="space-y-6">
-    <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <header class="page-hero">
         <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
                 <flux:heading size="xl">Detail Incident #{{ $issue->id }}</flux:heading>
@@ -39,22 +39,26 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
         </div>
     </header>
 
+    {{-- Dua kolom: konten utama kiri, meta & bukti kanan --}}
+    <div class="grid gap-6 lg:grid-cols-3">
+    <div class="space-y-6 lg:col-span-2">
     <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <div class="grid gap-4 md:grid-cols-2">
+        <flux:heading size="lg">Informasi Incident</flux:heading>
+        <div class="mt-3 grid gap-4 md:grid-cols-2">
             <div>
-                <p class="text-xs uppercase text-zinc-500">Tanggal</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Tanggal</p>
                 <p class="mt-1 font-medium">{{ $issue->tanggal?->format('d-m-Y H:i') ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Lokasi</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Lokasi</p>
                 <p class="mt-1 font-medium">{{ $issue->lokasi }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Jenis</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Jenis</p>
                 <p class="mt-1 font-medium">{{ $issue->jenis }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Status</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Status</p>
                 <div class="mt-1">
                     @if ($issue->status === 'selesai')
                         <flux:badge color="green" size="sm">Selesai</flux:badge>
@@ -66,33 +70,35 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
                 </div>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Pelapor</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Pelapor</p>
                 <p class="mt-1 font-medium">{{ $issue->pelapor }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Satker</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Satker</p>
                 <p class="mt-1 font-medium">{{ $issue->satker }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Pihak Terlibat</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Pihak Terlibat</p>
                 <p class="mt-1 font-medium">{{ $issue->pihak_terlibat ?: '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Dibuat Oleh</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Dibuat Oleh</p>
                 <p class="mt-1 font-medium">{{ $issue->creator?->name ?? '-' }}</p>
             </div>
         </div>
     </section>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <flux:heading size="lg">Deskripsi</flux:heading>
-        <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $issue->deskripsi }}</p>
-    </section>
+    <div class="grid gap-6 md:grid-cols-2">
+        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <flux:heading size="lg">Deskripsi</flux:heading>
+            <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $issue->deskripsi }}</p>
+        </section>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <flux:heading size="lg">Tindakan</flux:heading>
-        <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $issue->tindakan ?: '-' }}</p>
-    </section>
+        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <flux:heading size="lg">Tindakan</flux:heading>
+            <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $issue->tindakan ?: '-' }}</p>
+        </section>
+    </div>
 
     <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
         <flux:heading size="lg">Log Operasi Alat Terkait</flux:heading>
@@ -100,7 +106,7 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
         @if ($issue->operasiAlats->isNotEmpty())
             <div class="mt-3 overflow-x-auto">
                 <table class="min-w-full text-sm">
-                    <thead class="bg-zinc-100 text-left text-xs uppercase text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                         <tr>
                             <th class="px-3 py-2 font-semibold">Jenis Alat</th>
                             <th class="px-3 py-2 font-semibold">Operator</th>
@@ -111,10 +117,10 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
                     </thead>
                     <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
                         @foreach ($issue->operasiAlats as $log)
-                            <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-800/70">
+                            <tr class="transition-colors hover:bg-indigo-50/40 dark:hover:bg-zinc-800/70">
                                 <td class="px-3 py-2">{{ $log->jenisAlatLabel() }}</td>
                                 <td class="px-3 py-2">{{ $log->operator?->name ?? '-' }}</td>
-                                <td class="px-3 py-2 whitespace-nowrap">{{ $log->waktu_mulai?->format('d-m-Y H:i') ?? '-' }}</td>
+                                <td class="px-3 py-2 font-mono text-xs whitespace-nowrap">{{ $log->waktu_mulai?->format('d-m-Y H:i') ?? '-' }}</td>
                                 <td class="px-3 py-2">
                                     @if ($log->hasil === 'berhasil')
                                         <flux:badge color="green" size="sm">Berhasil</flux:badge>
@@ -126,7 +132,7 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
                                         -
                                     @endif
                                 </td>
-                                <td class="px-3 py-2 whitespace-nowrap">
+                                <td class="px-3 py-2 font-mono text-xs whitespace-nowrap">
                                     <flux:button href="{{ route('operasi-alat.show', $log) }}" variant="primary" size="sm" wire:navigate>Lihat</flux:button>
                                 </td>
                             </tr>
@@ -139,13 +145,15 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
         @endif
     </section>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    </div>
+
+    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm self-start lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:heading size="lg">Foto Bukti</flux:heading>
 
         @if ($issue->foto_bukti)
             <div class="mt-3">
                 @if (\Illuminate\Support\Str::startsWith($issue->foto_bukti, ['http://', 'https://']))
-                    <a href="{{ $issue->foto_bukti }}" target="_blank" class="text-blue-600 hover:underline">Buka Foto Bukti</a>
+                    <a href="{{ $issue->foto_bukti }}" target="_blank" class="text-indigo-600 hover:underline">Buka Foto Bukti</a>
                 @else
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($issue->foto_bukti) }}" alt="Foto bukti issue {{ $issue->id }}" class="max-h-[400px] rounded-lg border border-zinc-200 object-cover dark:border-zinc-700">
                 @endif
@@ -154,4 +162,5 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
             <p class="mt-2 text-sm text-zinc-500">Belum ada foto bukti.</p>
         @endif
     </section>
+    </div>
 </div>

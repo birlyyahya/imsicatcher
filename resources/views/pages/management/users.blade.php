@@ -216,36 +216,36 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
 <section class="space-y-6">
 
     {{-- HEADER --}}
-    <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="page-hero">
         <flux:heading size="xl">Manajemen User</flux:heading>
-        <flux:text class="text-sm text-zinc-500">Kelola user dengan cepat dan efisien</flux:text>
+        <flux:text class="text-sm">Kelola user dengan cepat dan efisien</flux:text>
+
+        <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Total User</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-white">{{ number_format($this->stats['total']) }}</div>
+            </div>
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Operator</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-sky-300">{{ number_format($this->stats['operator']) }}</div>
+            </div>
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Admin</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-amber-300">{{ number_format($this->stats['admin']) }}</div>
+            </div>
+            <div class="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+                <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-200/70">Superadmin</div>
+                <div class="mt-1 font-display text-3xl font-bold tracking-tight text-emerald-300">{{ number_format($this->stats['superadmin']) }}</div>
+            </div>
+        </div>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-4">
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Total User</div>
-            <div class="mt-2 text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ number_format($this->stats['total']) }}</div>
-        </div>
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Operator</div>
-            <div class="mt-2 text-2xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($this->stats['operator']) }}</div>
-        </div>
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Admin</div>
-            <div class="mt-2 text-2xl font-bold text-amber-600 dark:text-amber-400">{{ number_format($this->stats['admin']) }}</div>
-        </div>
-        <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="text-xs uppercase text-zinc-500">Superadmin</div>
-            <div class="mt-2 text-2xl font-bold text-emerald-600 dark:text-emerald-400">{{ number_format($this->stats['superadmin']) }}</div>
-        </div>
-    </div>
-
-    {{-- MAIN --}}
+    {{-- MAIN: tabel di kiri, form sticky di kanan --}}
     <div class="grid gap-6 lg:grid-cols-3">
 
         {{-- FORM --}}
-        <div class="lg:col-span-1">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <div class="lg:order-2 lg:col-span-1">
+            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
                 <flux:heading size="lg" class="mb-4">
                     {{ $editingUserId ? 'Edit User' : 'Tambah User' }}
                 </flux:heading>
@@ -330,7 +330,7 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
         </div>
 
         {{-- TABLE --}}
-        <div class="lg:col-span-2">
+        <div class="lg:order-1 lg:col-span-2">
             <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
 
                 {{-- SEARCH --}}
@@ -343,7 +343,7 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
                 {{-- TABLE --}}
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                        <thead class="bg-indigo-50/80 text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                             <tr>
                                 <th class="px-3 py-2 text-left">Nama</th>
                                 <th class="px-3 py-2 text-left">Username</th>
@@ -355,7 +355,7 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
 
                         <tbody>
                             @forelse($this->users as $user)
-                            <tr class="border-b border-zinc-200 hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">
+                            <tr class="border-b border-zinc-200 transition-colors hover:bg-indigo-50/40 dark:border-zinc-700 dark:hover:bg-zinc-800">
                                 <td class="px-3 py-2 font-medium text-zinc-900 dark:text-zinc-100">{{ $user->name }}</td>
                                 <td class="px-3 py-2 text-zinc-500 dark:text-zinc-400">{{ $user->username }}</td>
                                 <td class="px-3 py-2">
@@ -374,7 +374,7 @@ new #[Layout('layouts.app'), Title('Manajemen User')] class extends Component
                                 </td>
                                 <td class="px-3 py-2 text-right space-x-2">
 
-                                    <flux:button size="sm" wire:click="edit({{ $user->id }})" type="button" variant="ghost" class="!px-2 !py-1 text-blue-600">
+                                    <flux:button size="sm" wire:click="edit({{ $user->id }})" type="button" variant="ghost" class="!px-2 !py-1 text-indigo-600">
                                         Edit
                                     </flux:button>
 

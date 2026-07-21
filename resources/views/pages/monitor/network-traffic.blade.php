@@ -1,65 +1,64 @@
 <x-layouts::app :title="__('Network Traffic')">
     <div class="space-y-6">
-        <header class="rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+        <header class="page-hero">
             <h1 class="text-2xl font-semibold">Network Traffic Monitoring</h1>
             <p class="text-sm text-zinc-500 dark:text-zinc-400">Monitor real-time throughput, latency, packet loss, dan jalankan speedtest untuk mengukur kecepatan koneksi.</p>
         </header>
 
-        <div class="grid gap-6 md:grid-cols-1">
+        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-lg font-semibold">Speedtest</h2>
+                    <p class="text-sm text-zinc-500">Jalankan speedtest untuk mengukur kecepatan download dan upload koneksi Anda.</p>
+                </div>
+            </div>
 
-            <section class="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-700 dark:bg-zinc-900">
-                <h2 class="text-lg font-semibold mb-4">Speedtest</h2>
-                <p class="text-sm text-zinc-500 mb-4">Jalankan speedtest untuk mengukur kecepatan download dan upload koneksi Anda.</p>
+            <div id="startArea" class="mb-2 flex min-h-40 items-center justify-center rounded-xl border border-dashed border-zinc-300 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800/50">
+                <button id="startSpeedtestBtn" type="button" class="rounded-lg bg-indigo-600 px-6 py-3 text-white transition-colors hover:bg-indigo-700">
+                    Start Speedtest
+                </button>
+            </div>
 
-                <div id="startArea" class="text-center mb-6">
-                    <button id="startSpeedtestBtn" type="button" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                        Start Speedtest
-                    </button>
+            <div id="loading" class="hidden py-4 text-center">
+                <span class="loadCircle"></span>
+                Loading speedtest...
+            </div>
+
+            <div id="testWrapper" class="hidden space-y-4">
+                {{-- Toolbar: pilih server + kontrol start/abort dalam satu baris --}}
+                <div class="flex flex-wrap items-end justify-between gap-3 rounded-xl bg-zinc-50 p-3 ring-1 ring-zinc-200/70 dark:bg-zinc-800/50 dark:ring-zinc-700">
+                    <div class="min-w-64 flex-1">
+                        <label for="server" class="mb-2 block font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Pilih server</label>
+                        <select id="server" class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"></select>
+                    </div>
+                    <button id="startStopBtn" type="button" class="rounded-lg bg-indigo-600 px-6 py-2 text-white transition-colors hover:bg-indigo-700">Start</button>
                 </div>
 
-                <div id="loading" class="hidden text-center py-4">
-                    <span class="loadCircle"></span>
-                    Loading speedtest...
-                </div>
-
-                <div id="testWrapper" class="hidden space-y-4">
-                    <div class="text-center">
-                        <label for="server" class="block text-sm text-zinc-500 mb-2">Pilih server</label>
-                        <select id="server" class="mx-auto rounded border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"></select>
+                {{-- Empat metrik dalam satu baris grid --}}
+                <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+                        <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400 mb-1">Download</div>
+                        <div id="dlText" class="font-display text-3xl font-bold text-indigo-600">0.0 Mbps</div>
+                        <div class="h-2 mt-2 overflow-hidden rounded bg-zinc-200 dark:bg-zinc-700"><div id="dlBar" class="h-2 w-0 bg-indigo-500"></div></div>
                     </div>
-
-                    <div class="flex gap-4 justify-between">
-                        <div class="w-1/2 rounded-lg border border-zinc-300 p-4 dark:border-zinc-700 dark:bg-zinc-900">
-                            <div class="text-xs uppercase text-zinc-500 mb-1">Download</div>
-                            <div id="dlText" class="text-3xl font-bold text-blue-600">0.0 Mbps</div>
-                            <div class="h-2 mt-2 overflow-hidden rounded bg-zinc-200 dark:bg-zinc-700"><div id="dlBar" class="h-2 w-0 bg-blue-500"></div></div>
-                        </div>
-                        <div class="w-1/2 rounded-lg border border-zinc-300 p-4 dark:border-zinc-700 dark:bg-zinc-900">
-                            <div class="text-xs uppercase text-zinc-500 mb-1">Upload</div>
-                            <div id="ulText" class="text-3xl font-bold text-green-600">0.0 Mbps</div>
-                            <div class="h-2 mt-2 overflow-hidden rounded bg-zinc-200 dark:bg-zinc-700"><div id="ulBar" class="h-2 w-0 bg-green-500"></div></div>
-                        </div>
+                    <div class="rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+                        <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400 mb-1">Upload</div>
+                        <div id="ulText" class="font-display text-3xl font-bold text-green-600">0.0 Mbps</div>
+                        <div class="h-2 mt-2 overflow-hidden rounded bg-zinc-200 dark:bg-zinc-700"><div id="ulBar" class="h-2 w-0 bg-green-500"></div></div>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="rounded-lg border border-zinc-300 p-4 dark:border-zinc-700 dark:bg-zinc-900">
-                            <div class="text-xs uppercase text-zinc-500 mb-1">Ping</div>
-                            <div id="pingText" class="text-2xl font-bold text-yellow-600">0 ms</div>
-                        </div>
-                        <div class="rounded-lg border border-zinc-300 p-4 dark:border-zinc-700 dark:bg-zinc-900">
-                            <div class="text-xs uppercase text-zinc-500 mb-1">Jitter</div>
-                            <div id="jitText" class="text-2xl font-bold text-red-600">0 ms</div>
-                        </div>
+                    <div class="rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+                        <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400 mb-1">Ping</div>
+                        <div id="pingText" class="font-display text-3xl font-bold tracking-tight text-yellow-600">0 ms</div>
                     </div>
-
-                    <div id="ipArea" class="text-center text-sm text-zinc-500">IP Address: <span id="ip">-</span></div>
-
-                    <div class="text-center">
-                        <button id="startStopBtn" type="button" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Start</button>
+                    <div class="rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 dark:border-zinc-700 dark:bg-zinc-900">
+                        <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400 mb-1">Jitter</div>
+                        <div id="jitText" class="font-display text-3xl font-bold tracking-tight text-red-600">0 ms</div>
                     </div>
                 </div>
-            </section>
-        </div>
+
+                <div id="ipArea" class="text-center font-mono text-sm text-zinc-500">IP Address: <span id="ip">-</span></div>
+            </div>
+        </section>
     </div>
 
     <style>

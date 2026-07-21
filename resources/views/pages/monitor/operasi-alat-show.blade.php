@@ -29,7 +29,7 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 @endassets
 <div class="space-y-6">
-    <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <header class="page-hero">
         <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
                 <flux:heading size="xl">Detail Log Operasi Alat #{{ $operasiAlat->id }}</flux:heading>
@@ -43,14 +43,18 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
         </div>
     </header>
 
+    {{-- Dua kolom: konten utama kiri, bukti kanan --}}
+    <div class="grid gap-6 lg:grid-cols-3">
+    <div class="space-y-6 lg:col-span-2">
     <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <div class="grid gap-4 md:grid-cols-2">
+        <flux:heading size="lg">Informasi Operasi</flux:heading>
+        <div class="mt-3 grid gap-4 md:grid-cols-2">
             <div>
-                <p class="text-xs uppercase text-zinc-500">Jenis Alat</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Jenis Alat</p>
                 <p class="mt-1 font-medium">{{ $operasiAlat->jenisAlatLabel() }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Hasil</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Hasil</p>
                 <div class="mt-1">
                     @if ($operasiAlat->hasil === 'berhasil')
                         <flux:badge color="green" size="sm">Berhasil</flux:badge>
@@ -64,30 +68,30 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
                 </div>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Waktu Mulai</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Waktu Mulai</p>
                 <p class="mt-1 font-medium">{{ $operasiAlat->waktu_mulai?->format('d-m-Y H:i') ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Waktu Selesai</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Waktu Selesai</p>
                 <p class="mt-1 font-medium">{{ $operasiAlat->waktu_selesai?->format('d-m-Y H:i') ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Operator</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Operator</p>
                 <p class="mt-1 font-medium">{{ $operasiAlat->operator?->name ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Satker</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Satker</p>
                 <p class="mt-1 font-medium">{{ $operasiAlat->satker?->nama ?? '-' }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Keterangan Lokasi</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Keterangan Lokasi</p>
                 <p class="mt-1 font-medium">{{ $operasiAlat->lokasi_keterangan ?: ($operasiAlat->lokasi ?: '-') }}</p>
             </div>
             <div>
-                <p class="text-xs uppercase text-zinc-500">Incident Terkait</p>
+                <p class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Incident Terkait</p>
                 <p class="mt-1 font-medium">
                     @if ($operasiAlat->missionIssue)
-                        <a href="{{ route('mission-issues.show', $operasiAlat->missionIssue) }}" wire:navigate class="text-blue-600 hover:underline">
+                        <a href="{{ route('mission-issues.show', $operasiAlat->missionIssue) }}" wire:navigate class="text-indigo-600 hover:underline">
                             #{{ $operasiAlat->missionIssue->id }} — {{ $operasiAlat->missionIssue->jenis }}
                         </a>
                     @else
@@ -116,23 +120,26 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
         @endif
     </section>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <flux:heading size="lg">Tujuan Operasi</flux:heading>
-        <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $operasiAlat->tujuan_operasi }}</p>
-    </section>
+    <div class="grid gap-6 md:grid-cols-2">
+        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <flux:heading size="lg">Tujuan Operasi</flux:heading>
+            <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $operasiAlat->tujuan_operasi }}</p>
+        </section>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
-        <flux:heading size="lg">Catatan</flux:heading>
-        <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $operasiAlat->catatan ?: '-' }}</p>
-    </section>
+        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <flux:heading size="lg">Catatan</flux:heading>
+            <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $operasiAlat->catatan ?: '-' }}</p>
+        </section>
+    </div>
+    </div>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm self-start lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:heading size="lg">Foto Bukti</flux:heading>
 
         @if ($operasiAlat->foto_bukti)
             <div class="mt-3">
                 @if (\Illuminate\Support\Str::startsWith($operasiAlat->foto_bukti, ['http://', 'https://']))
-                    <a href="{{ $operasiAlat->foto_bukti }}" target="_blank" class="text-blue-600 hover:underline">Buka Foto Bukti</a>
+                    <a href="{{ $operasiAlat->foto_bukti }}" target="_blank" class="text-indigo-600 hover:underline">Buka Foto Bukti</a>
                 @else
                     <img src="{{ \Illuminate\Support\Facades\Storage::url($operasiAlat->foto_bukti) }}" alt="Foto bukti operasi {{ $operasiAlat->id }}" class="max-h-[400px] rounded-lg border border-zinc-200 object-cover dark:border-zinc-700">
                 @endif
@@ -141,4 +148,5 @@ new #[Layout('layouts.app'), Title('Detail Log Operasi Alat')] class extends Com
             <p class="mt-2 text-sm text-zinc-500">Belum ada foto bukti.</p>
         @endif
     </section>
+    </div>
 </div>

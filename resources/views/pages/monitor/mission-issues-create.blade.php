@@ -95,8 +95,8 @@ new #[Layout('layouts.app'), Title('Tambah Incident')] class extends Component
 };
 
 ?>
-<div class="space-y-6">
-    <header class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+<div class="mx-auto w-full max-w-4xl space-y-6">
+    <header class="page-hero">
         <div class="flex items-center justify-between gap-2">
             <div>
                 <flux:heading size="xl">Tambah Incident</flux:heading>
@@ -149,13 +149,13 @@ new #[Layout('layouts.app'), Title('Tambah Incident')] class extends Component
 
             <div>
                 <label class="mb-1 block text-sm font-medium">Deskripsi</label>
-                <textarea wire:model="deskripsi" rows="3" placeholder="Jelaskan kronologi masalah yang terjadi..." class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <textarea wire:model="deskripsi" rows="3" placeholder="Jelaskan kronologi masalah yang terjadi..." class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                 @error('deskripsi') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
             <div>
                 <label class="mb-1 block text-sm font-medium">Tindakan</label>
-                <textarea wire:model="tindakan" rows="3" placeholder="Tindakan penanganan yang sudah/akan dilakukan..." class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                <textarea wire:model="tindakan" rows="3" placeholder="Tindakan penanganan yang sudah/akan dilakukan..." class="w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
                 @error('tindakan') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
@@ -179,7 +179,7 @@ new #[Layout('layouts.app'), Title('Tambah Incident')] class extends Component
 
             @if ($foto)
                 <div>
-                    <p class="mb-1 text-xs uppercase text-zinc-500">Preview Foto</p>
+                    <p class="mb-1 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Preview Foto</p>
                     <img src="{{ $foto->temporaryUrl() }}" alt="Preview foto bukti" class="max-h-48 rounded-lg border border-zinc-200 dark:border-zinc-700">
                 </div>
             @endif

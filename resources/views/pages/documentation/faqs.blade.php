@@ -117,7 +117,7 @@ new #[Layout('layouts.app'), Title('Kelola FAQ')] class extends Component
 
 ?>
 <section class="space-y-6">
-    <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="page-hero">
         <div class="flex items-center justify-between">
             <div>
                 <flux:heading size="xl">Kelola FAQ</flux:heading>
@@ -165,7 +165,7 @@ new #[Layout('layouts.app'), Title('Kelola FAQ')] class extends Component
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-zinc-100 text-left text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="bg-indigo-50/80 text-left text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
                         <tr>
                             <th class="px-3 py-2">Pertanyaan</th>
                             <th class="px-3 py-2">Kategori</th>

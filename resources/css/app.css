@@ -10,14 +10,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --color-accent: var(--color-emerald-600);
-    --color-accent-content: var(--color-emerald-600);
+    --color-accent: var(--color-indigo-600);
+    --color-accent-content: var(--color-indigo-600);
     --color-accent-foreground: var(--color-white);
+    --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
 }
 @layer theme {
     .dark {
-        --color-accent: var(--color-emerald-600);
-        --color-accent-content: var(--color-emerald-400);
+        --color-accent: var(--color-indigo-500);
+        --color-accent-content: var(--color-indigo-400);
         --color-accent-foreground: var(--color-white);
     }
 }
@@ -45,6 +47,84 @@ input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+}
+
+/* ===== Tema "tech" ===== */
+
+/* Semua heading memakai font display teknis. */
+h1, h2, h3, h4,
+[data-flux-heading] {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+}
+
+/* Strip brand animasi di atas navbar. */
+.brand-strip {
+    background: linear-gradient(90deg,
+        var(--color-indigo-600), var(--color-sky-500), var(--color-cyan-400),
+        var(--color-sky-500), var(--color-indigo-600));
+    background-size: 200% 100%;
+    animation: brand-strip-slide 10s linear infinite;
+}
+@keyframes brand-strip-slide {
+    from { background-position: 0% 0; }
+    to { background-position: 200% 0; }
+}
+
+/*
+ * Hero header halaman gaya command-console: latar gelap dengan grid halus
+ * dan glow. Konten di dalamnya (heading/teks/tombol Flux) otomatis
+ * di-styling agar terbaca di atas latar gelap — markup halaman cukup
+ * memakai class .page-hero.
+ */
+.page-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-2xl);
+    padding: calc(var(--spacing) * 6);
+    color: var(--color-white);
+    background:
+        radial-gradient(60rem 20rem at 110% -20%, rgb(56 189 248 / 0.30), transparent 60%),
+        radial-gradient(40rem 16rem at -10% 130%, rgb(99 102 241 / 0.35), transparent 60%),
+        linear-gradient(120deg, #020617, #1e1b4b 55%, #0f172a);
+    box-shadow: 0 10px 30px -12px rgb(30 27 75 / 0.45);
+}
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgb(148 163 184 / 0.22) 1px, transparent 0);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(115deg, black 30%, transparent 80%);
+}
+.page-hero > * {
+    position: relative;
+}
+.page-hero [data-flux-heading],
+.page-hero h1,
+.page-hero h2 {
+    color: var(--color-white);
+}
+.page-hero [data-flux-heading]::before,
+.page-hero h1::before {
+    content: '// ';
+    font-family: var(--font-mono);
+    color: var(--color-sky-400);
+}
+.page-hero [data-flux-text],
+.page-hero [data-flux-subheading],
+.page-hero p {
+    color: rgb(199 210 254 / 0.85);
+}
+.page-hero [data-flux-button] {
+    background: rgb(255 255 255 / 0.10) !important;
+    border: 1px solid rgb(255 255 255 / 0.15) !important;
+    color: var(--color-white) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(4px);
+}
+.page-hero [data-flux-button]:hover {
+    background: rgb(255 255 255 / 0.22) !important;
 }
 
 /* \[:where(&)\]:size-4 {
