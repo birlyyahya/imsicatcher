@@ -1,52 +1,68 @@
-<x-layouts::auth :title="__('Log in')">
-    <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
+<x-layouts::auth.terminal :title="__('Masuk')">
+    <p class="eyebrow">// AKSES TERBATAS</p>
+    <h1 class="access-title">Terminal</h1>
+    <p class="access-sub">Masukkan kredensial operator untuk membuka kanal aman.</p>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+    @if ($errors->any())
+        <div class="alert" role="alert">
+            <span class="alert-tag">DITOLAK</span>
+            <span>{{ $errors->first() }}</span>
+        </div>
+    @endif
 
-        <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
-            @csrf
+    @if (session('status'))
+        <div class="alert alert-ok" role="status">{{ session('status') }}</div>
+    @endif
 
-            <!-- Email Address -->
-            <flux:input
+    <form method="POST" action="{{ route('login.store') }}" class="form">
+        @csrf
+
+        <label class="field" for="username">
+            <span class="field-label">ID Operator</span>
+            <input
+                id="username"
                 name="username"
-                :label="__('Username')"
-                :value="old('username')"
                 type="text"
+                value="{{ old('username') }}"
                 required
                 autofocus
                 autocomplete="username"
-                placeholder="username"
-            />
+                placeholder="operator_id"
+                class="field-input"
+            >
+        </label>
 
-            <!-- Password -->
-            <div class="relative">
-                <flux:input
+        <label class="field" for="password">
+            <span class="field-label">Passphrase</span>
+            <span class="field-wrap">
+                <input
+                    id="password"
                     name="password"
-                    :label="__('Password')"
                     type="password"
                     required
                     autocomplete="current-password"
-                    :placeholder="__('Password')"
-                    viewable
-                />
+                    placeholder="••••••••"
+                    class="field-input"
+                >
+                <button type="button" id="pwBtn" class="pw-toggle" onclick="termTogglePw()">LIHAT</button>
+            </span>
+            @if (Route::has('password.request'))
+                <a class="field-aux" href="{{ route('password.request') }}">Lupa passphrase?</a>
+            @endif
+        </label>
 
-                @if (Route::has('password.request'))
-                    <flux:link class="absolute top-0 text-sm end-0" :href="route('password.request')" wire:navigate>
-                        {{ __('Forgot your password?') }}
-                    </flux:link>
-                @endif
-            </div>
+        <label class="remember">
+            <input type="checkbox" name="remember" value="1" @checked(old('remember'))>
+            <span>Ingat perangkat ini</span>
+        </label>
 
-            <!-- Remember Me -->
-            <flux:checkbox name="remember" :label="__('Remember me')" :checked="old('remember')" />
+        <button type="submit" class="submit" data-test="login-button">
+            <span>Masuk</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </form>
 
-            <div class="flex items-center justify-end">
-                <flux:button variant="primary" type="submit" class="w-full" data-test="login-button">
-                    {{ __('Log in') }}
-                </flux:button>
-            </div>
-        </form>
-    </div>
-</x-layouts::auth>
+    <p class="foot-note">AKTIVITAS SESI DIREKAM · <b>IMSI CATCHER</b></p>
+</x-layouts::auth.terminal>
