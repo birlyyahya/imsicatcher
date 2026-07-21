@@ -134,7 +134,7 @@ new #[Layout('layouts.app'), Title('Kelola FAQ')] class extends Component
     @endif
 
     <div class="grid gap-6 lg:grid-cols-3">
-        <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 lg:col-span-1">
+        <div class="panel p-5 lg:col-span-1">
             <flux:heading size="lg" class="mb-4">{{ $editingId ? 'Edit FAQ' : 'Tambah FAQ' }}</flux:heading>
             <form wire:submit="save" class="space-y-3">
                 <flux:input wire:model="question" label="Pertanyaan" />
@@ -158,14 +158,14 @@ new #[Layout('layouts.app'), Title('Kelola FAQ')] class extends Component
             </form>
         </div>
 
-        <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 lg:col-span-2">
+        <div class="panel p-5 lg:col-span-2">
             <div class="mb-4 flex items-center justify-between gap-3">
                 <flux:heading size="lg">Daftar FAQ</flux:heading>
                 <flux:input wire:model.live.debounce.300ms="search" placeholder="Cari pertanyaan/jawaban..." class="!w-64" />
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-indigo-50/80 text-left text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="thead-panel text-left">
                         <tr>
                             <th class="px-3 py-2">Pertanyaan</th>
                             <th class="px-3 py-2">Kategori</th>

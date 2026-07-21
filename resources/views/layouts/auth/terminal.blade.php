@@ -1,4 +1,8 @@
-@props(['title' => null])
+@props([
+    'title' => null,
+    'scopeTag' => 'Sistem Monitoring Imsi Catcher',
+    'scopeDesc' => 'Akuisisi · Pelacakan · Dokumentasi sinyal operasi',
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -184,6 +188,38 @@
             border:1px solid rgba(248,113,113,.4); border-radius:5px; padding:2px 6px; flex:none}
         .alert-ok{color:#bbf7d0; background:rgba(52,211,153,.08); border-color:rgba(52,211,153,.3)}
 
+        .info-box{
+            font-size:13.5px; line-height:1.6; color:var(--muted);
+            background:#080e1b; border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+        }
+
+        .btn-ghost{
+            display:flex; align-items:center; justify-content:center; gap:8px; width:100%;
+            padding:12px 16px; cursor:pointer; font-family:var(--mono); font-size:12.5px;
+            letter-spacing:.08em; color:var(--muted); background:transparent;
+            border:1px solid var(--line-2); border-radius:10px; transition:border-color .15s, color .15s, background .15s;
+        }
+        .btn-ghost:hover{color:var(--ink); border-color:rgba(34,211,238,.4); background:rgba(34,211,238,.05)}
+
+        .divider{display:flex; align-items:center; gap:12px; margin:2px 0; color:var(--muted-2); font-family:var(--mono); font-size:10.5px; letter-spacing:.14em}
+        .divider::before,.divider::after{content:''; flex:1; height:1px; background:var(--line)}
+
+        .back-link{margin:22px 0 0; text-align:center; font-size:13px; color:var(--muted)}
+        .back-link a{color:var(--cyan); text-decoration:none; font-weight:500}
+        .back-link a:hover{text-decoration:underline}
+
+        .otp-row{display:flex; justify-content:center; gap:9px; margin:6px 0}
+        .otp-box{
+            width:44px; height:52px; text-align:center; font-family:var(--mono); font-size:20px; font-weight:600;
+            color:var(--ink); background:#080e1b; border:1px solid var(--line-2); border-radius:10px; outline:none;
+            transition:border-color .15s, box-shadow .15s;
+        }
+        .otp-box:focus{border-color:var(--cyan); box-shadow:0 0 0 3px rgba(34,211,238,.14)}
+
+        .switch-mode{margin:16px 0 0; text-align:center; font-size:12.5px; color:var(--muted)}
+        .switch-mode button{background:none; border:0; padding:0; cursor:pointer; color:var(--indigo-2); font-family:inherit; font-size:inherit; text-decoration:underline}
+        .switch-mode button:hover{color:var(--cyan)}
+
         .foot-note{margin:22px 0 0; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--muted-2); text-align:center}
         .foot-note b{color:var(--muted)}
 
@@ -227,8 +263,8 @@
                     <span class="blip blip-3"></span>
                 </div>
                 <div>
-                    <p class="scope-tag">Sistem Monitoring Imsi Catcher</p>
-                    <p class="scope-desc">Akuisisi · Pelacakan · Dokumentasi sinyal operasi</p>
+                    <p class="scope-tag">{{ $scopeTag }}</p>
+                    <p class="scope-desc">{{ $scopeDesc }}</p>
                 </div>
             </div>
 

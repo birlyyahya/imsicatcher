@@ -14,10 +14,10 @@
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 <script>
-    // Default tema terang: hanya berlaku bila user belum memilih appearance
-    // sendiri lewat halaman Settings > Appearance.
+    // Default tema gelap "terminal intel": hanya berlaku bila user belum
+    // memilih appearance sendiri lewat halaman Settings > Appearance.
     if (! localStorage.getItem('flux.appearance')) {
-        localStorage.setItem('flux.appearance', 'light');
+        localStorage.setItem('flux.appearance', 'dark');
     }
 </script>
 @fluxAppearance

@@ -42,7 +42,7 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
     {{-- Dua kolom: konten utama kiri, meta & bukti kanan --}}
     <div class="grid gap-6 lg:grid-cols-3">
     <div class="space-y-6 lg:col-span-2">
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <section class="panel p-5">
         <flux:heading size="lg">Informasi Incident</flux:heading>
         <div class="mt-3 grid gap-4 md:grid-cols-2">
             <div>
@@ -89,24 +89,24 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
     </section>
 
     <div class="grid gap-6 md:grid-cols-2">
-        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <section class="panel p-5">
             <flux:heading size="lg">Deskripsi</flux:heading>
             <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $issue->deskripsi }}</p>
         </section>
 
-        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <section class="panel p-5">
             <flux:heading size="lg">Tindakan</flux:heading>
             <p class="mt-2 text-sm leading-6 text-zinc-700 dark:text-zinc-300">{{ $issue->tindakan ?: '-' }}</p>
         </section>
     </div>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <section class="panel p-5">
         <flux:heading size="lg">Log Operasi Alat Terkait</flux:heading>
 
         @if ($issue->operasiAlats->isNotEmpty())
             <div class="mt-3 overflow-x-auto">
                 <table class="min-w-full text-sm">
-                    <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="thead-panel text-left text-xs uppercase tracking-wide">
                         <tr>
                             <th class="px-3 py-2 font-semibold">Jenis Alat</th>
                             <th class="px-3 py-2 font-semibold">Operator</th>
@@ -147,7 +147,7 @@ new #[Layout('layouts.app'), Title('Detail Incident')] class extends Component
 
     </div>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm self-start lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
+    <section class="panel p-5 self-start lg:sticky lg:top-24">
         <flux:heading size="lg">Foto Bukti</flux:heading>
 
         @if ($issue->foto_bukti)

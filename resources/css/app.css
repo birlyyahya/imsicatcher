@@ -15,12 +15,32 @@
     --color-accent-foreground: var(--color-white);
     --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+    /*
+     * Token panel "terminal". Default (light) sengaja identik dengan nilai
+     * literal lama (putih/indigo-50/zinc-200) agar tampilan terang tidak
+     * berubah — hanya varian .dark di bawah yang direskin navy/cyan.
+     */
+    --color-void: var(--color-zinc-100);
+    --color-panel: var(--color-white);
+    --color-panel-soft: var(--color-indigo-50);
+    --color-panel-ink: var(--color-indigo-950);
+    --color-hairline: var(--color-zinc-200);
+    --color-chrome: rgb(255 255 255 / 0.85);
 }
 @layer theme {
     .dark {
         --color-accent: var(--color-indigo-500);
         --color-accent-content: var(--color-indigo-400);
         --color-accent-foreground: var(--color-white);
+
+        /* Palet navy/cyan "terminal intel" — senada dengan halaman login. */
+        --color-void: #060a14;
+        --color-panel: #0b1220;
+        --color-panel-soft: #0a1120;
+        --color-panel-ink: #cdd6f4;
+        --color-hairline: rgb(148 163 184 / 0.16);
+        --color-chrome: rgb(10 14 26 / 0.85);
     }
 }
 
@@ -109,7 +129,7 @@ h1, h2, h3, h4,
 .page-hero h1::before {
     content: '// ';
     font-family: var(--font-mono);
-    color: var(--color-sky-400);
+    color: var(--color-cyan-400);
 }
 .page-hero [data-flux-text],
 .page-hero [data-flux-subheading],
@@ -125,6 +145,28 @@ h1, h2, h3, h4,
 }
 .page-hero [data-flux-button]:hover {
     background: rgb(255 255 255 / 0.22) !important;
+}
+
+/*
+ * Kartu panel: menggantikan pola utility berulang
+ * "rounded-2xl border border-zinc-200 bg-white ... dark:border-zinc-700 dark:bg-zinc-900"
+ * yang dipakai di puluhan tempat. Light mode identik dgn tampilan lama;
+ * dark mode memakai navy/cyan senada halaman login.
+ */
+.panel {
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-hairline);
+    background: var(--color-panel);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+}
+.dark .panel {
+    box-shadow: 0 20px 44px -28px rgb(0 0 0 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.03);
+}
+
+/* Header tabel: menggantikan "bg-indigo-50/80 ... dark:bg-zinc-800 dark:text-zinc-300". */
+.thead-panel {
+    background: var(--color-panel-soft);
+    color: var(--color-panel-ink);
 }
 
 /* \[:where(&)\]:size-4 {

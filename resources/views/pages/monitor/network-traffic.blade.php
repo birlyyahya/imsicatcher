@@ -5,7 +5,7 @@
             <p class="text-sm text-zinc-500 dark:text-zinc-400">Monitor real-time throughput, latency, packet loss, dan jalankan speedtest untuk mengukur kecepatan koneksi.</p>
         </header>
 
-        <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <section class="panel p-5">
             <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div>
                     <h2 class="text-lg font-semibold">Speedtest</h2>

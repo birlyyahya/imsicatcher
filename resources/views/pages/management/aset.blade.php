@@ -198,7 +198,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 
         {{-- FORM --}}
         <div class="lg:order-2 lg:col-span-1">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm lg:sticky lg:top-24 dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="panel p-5 lg:sticky lg:top-24">
                 <flux:heading size="lg" class="mb-4">
                     {{ $editingAsetId ? 'Edit Aset' : 'Tambah Aset' }}
                 </flux:heading>
@@ -278,7 +278,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 
         {{-- TABLE --}}
         <div class="lg:order-1 lg:col-span-2">
-            <div class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="panel p-5">
 
                 <div class="mb-4 flex items-center justify-between">
                     <flux:heading size="lg">Daftar Aset</flux:heading>
@@ -313,7 +313,7 @@ new #[Layout('layouts.app'), Title('Inventaris Aset')] class extends Component
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-                        <thead class="bg-indigo-50/80 text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
+                        <thead class="thead-panel">
                             <tr>
                                 <th class="px-3 py-2 text-left">Nama Aset</th>
                                 <th class="px-3 py-2 text-left">Kategori</th>

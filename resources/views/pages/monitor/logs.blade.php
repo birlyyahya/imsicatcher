@@ -160,7 +160,7 @@ new #[Layout('layouts.app'), Title('Log Aktivitas')] class extends Component
         </div>
     </header>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <section class="panel p-4">
         <div class="mb-4 flex items-center justify-between">
             <flux:heading size="lg">Daftar Aktivitas</flux:heading>
             <flux:text class="text-xs text-zinc-500">Menampilkan data terbaru terlebih dahulu.</flux:text>
@@ -195,7 +195,7 @@ new #[Layout('layouts.app'), Title('Log Aktivitas')] class extends Component
 
         <div class="overflow-x-auto">
             <table class="min-w-full text-sm">
-                <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
+                <thead class="thead-panel text-left text-xs uppercase tracking-wide">
                     <tr>
                         <th class="px-3 py-3 font-semibold">Waktu</th>
                         <th class="px-3 py-3 font-semibold">User</th>

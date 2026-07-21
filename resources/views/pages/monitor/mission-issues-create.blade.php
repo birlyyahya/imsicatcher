@@ -106,7 +106,7 @@ new #[Layout('layouts.app'), Title('Tambah Incident')] class extends Component
         </div>
     </header>
 
-    <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <section class="panel p-5">
         <form wire:submit="save" class="space-y-4">
             <div class="grid gap-4 md:grid-cols-2">
                 <div>

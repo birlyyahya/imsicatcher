@@ -70,7 +70,7 @@
 
         {{-- Grid asimetris: konten utama kiri, panel aksi & aktivitas kanan --}}
         <div class="grid gap-6 lg:grid-cols-3">
-            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm lg:col-span-2 dark:border-zinc-700 dark:bg-zinc-900">
+            <section class="panel p-5 lg:col-span-2">
                 <div class="mb-3 flex items-center justify-between">
                     <flux:heading size="lg">Incident Terbaru</flux:heading>
                     <a href="{{ route('mission-issues') }}" wire:navigate class="text-sm text-indigo-600 hover:underline">Lihat semua</a>
@@ -78,7 +78,7 @@
 
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
-                        <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
+                        <thead class="thead-panel text-left text-xs uppercase tracking-wide">
                             <tr>
                                 <th class="px-3 py-2">Tanggal</th>
                                 <th class="px-3 py-2">Lokasi</th>
@@ -115,7 +115,7 @@
             </section>
 
             <div class="space-y-6">
-                <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <section class="panel p-5">
                     <div class="mb-3">
                         <flux:heading size="lg">Aksi Cepat</flux:heading>
                     </div>
@@ -130,7 +130,7 @@
                     </div>
                 </section>
 
-                <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <section class="panel p-5">
                     <div class="mb-3 flex items-center justify-between">
                         <flux:heading size="lg">Aktivitas Terbaru</flux:heading>
                         <a href="{{ route('logs') }}" wire:navigate class="text-sm text-indigo-600 hover:underline">Buka log</a>

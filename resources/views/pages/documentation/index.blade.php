@@ -57,25 +57,25 @@
 
         <div x-show="tab === 'training'" x-transition.opacity.duration.200ms class="space-y-6">
             <section class="grid gap-4 md:grid-cols-4">
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Total Materi</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($materialCount) }}</div>
                 </div>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Video</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($videoCount) }}</div>
                 </div>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">PDF</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($pdfCount) }}</div>
                 </div>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Checklist</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($checklistCount) }}</div>
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <section class="panel p-5">
                 <h2 class="text-lg font-semibold">Library Materi</h2>
                 <div class="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
                     @forelse ($materials as $material)
@@ -108,21 +108,21 @@
 
         <div x-show="tab === 'support'" x-transition.opacity.duration.200ms class="space-y-6">
             <section class="grid gap-4 md:grid-cols-3">
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Email Support</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($emailContacts->count()) }}</div>
                 </div>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Hotline</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($hotlineContacts->count()) }}</div>
                 </div>
-                <div class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="panel p-4">
                     <div class="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-400">Internal Group</div>
                     <div class="mt-2 font-display text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{{ number_format($groupContacts->count()) }}</div>
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <section class="panel p-5">
                 <h2 class="text-lg font-semibold">Channel Support</h2>
                 <div class="mt-3 grid gap-3 md:grid-cols-3">
                     @forelse ($supportContacts as $contact)
@@ -146,7 +146,7 @@
                 </div>
             </section>
 
-            <section class="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+            <section class="panel p-5">
                 <h2 class="text-lg font-semibold">FAQ</h2>
                 <div class="mt-3 space-y-2">
                     @forelse ($faqs as $faq)

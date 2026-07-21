@@ -157,7 +157,7 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
             </div>
         @endif
 
-        <section class="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+        <section class="panel p-4">
             <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <flux:heading size="lg">Daftar Incidents</flux:heading>
                 <form class="flex flex-wrap items-center gap-2">
@@ -182,7 +182,7 @@ new #[Layout('layouts.app'), Title('Incident')] class extends Component
 
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm">
-                    <thead class="bg-indigo-50/80 text-left text-xs uppercase tracking-wide text-indigo-950/80 dark:bg-zinc-800 dark:text-zinc-300">
+                    <thead class="thead-panel text-left text-xs uppercase tracking-wide">
                         <tr>
                             <th class="px-3 py-3 font-semibold">Tanggal</th>
                             <th class="px-3 py-3 font-semibold">Lokasi</th>

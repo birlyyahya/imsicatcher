@@ -1,29 +1,35 @@
-<x-layouts::auth :title="__('Email verification')">
-    <div class="mt-4 flex flex-col gap-6">
-        <flux:text class="text-center">
-            {{ __('Please verify your email address by clicking on the link we just emailed to you.') }}
-        </flux:text>
+<x-layouts::auth.terminal
+    :title="__('Verifikasi email')"
+    scope-tag="Account Verification"
+    scope-desc="Aktifkan akses penuh ke terminal operasi"
+>
+    <p class="eyebrow">// VERIFIKASI PENDING</p>
+    <h1 class="access-title">Verifikasi Email</h1>
+    <p class="access-sub">Buka tautan aktivasi yang sudah dikirim ke email terdaftar untuk mengaktifkan akun.</p>
 
-        @if (session('status') == 'verification-link-sent')
-            <flux:text class="text-center font-medium !dark:text-green-400 !text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-            </flux:text>
-        @endif
-
-        <div class="flex flex-col items-center justify-between space-y-3">
-            <form method="POST" action="{{ route('verification.send') }}">
-                @csrf
-                <flux:button type="submit" variant="primary" class="w-full">
-                    {{ __('Resend verification email') }}
-                </flux:button>
-            </form>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <flux:button variant="ghost" type="submit" class="text-sm cursor-pointer" data-test="logout-button">
-                    {{ __('Log out') }}
-                </flux:button>
-            </form>
-        </div>
+    <div class="info-box">
+        Belum menerima email? Cek folder spam, atau minta tautan baru lewat tombol di bawah.
     </div>
-</x-layouts::auth>
+
+    @if (session('status') == 'verification-link-sent')
+        <div class="alert alert-ok" role="status">
+            Tautan verifikasi baru sudah dikirim ke email yang Anda daftarkan.
+        </div>
+    @endif
+
+    <div class="form" style="margin-top:18px">
+        <form method="POST" action="{{ route('verification.send') }}">
+            @csrf
+            <button type="submit" class="submit">
+                <span>Kirim Ulang Tautan Verifikasi</span>
+            </button>
+        </form>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn-ghost" data-test="logout-button">Keluar</button>
+        </form>
+    </div>
+
+    <p class="foot-note">AKTIVITAS SESI DIREKAM · <b>IMSI CATCHER</b></p>
+</x-layouts::auth.terminal>

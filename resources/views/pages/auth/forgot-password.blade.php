@@ -1,31 +1,46 @@
-<x-layouts::auth :title="__('Forgot password')">
-    <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Forgot password')" :description="__('Enter your email to receive a password reset link')" />
+<x-layouts::auth.terminal
+    :title="__('Lupa passphrase')"
+    scope-tag="Access Recovery"
+    scope-desc="Pulihkan akses ke terminal operasi"
+>
+    <p class="eyebrow">// PEMULIHAN AKSES</p>
+    <h1 class="access-title">Lupa Passphrase</h1>
+    <p class="access-sub">Masukkan email terdaftar untuk menerima tautan reset passphrase.</p>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+    @if (session('status'))
+        <div class="alert alert-ok" role="status">{{ session('status') }}</div>
+    @endif
 
-        <form method="POST" action="{{ route('password.email') }}" class="flex flex-col gap-6">
-            @csrf
+    @if ($errors->any())
+        <div class="alert" role="alert">
+            <span class="alert-tag">GAGAL</span>
+            <span>{{ $errors->first() }}</span>
+        </div>
+    @endif
 
-            <!-- Email Address -->
-            <flux:input
+    <form method="POST" action="{{ route('password.email') }}" class="form">
+        @csrf
+
+        <label class="field" for="email">
+            <span class="field-label">Alamat Email</span>
+            <input
+                id="email"
                 name="email"
-                :label="__('Email address')"
                 type="email"
                 required
                 autofocus
-                placeholder="email@example.com"
-            />
+                placeholder="operator@kejaksaan.go.id"
+                class="field-input"
+            >
+        </label>
 
-            <flux:button variant="primary" type="submit" class="w-full" data-test="email-password-reset-link-button">
-                {{ __('Email password reset link') }}
-            </flux:button>
-        </form>
+        <button type="submit" class="submit" data-test="email-password-reset-link-button">
+            <span>Kirim Tautan Reset</span>
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 10h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </form>
 
-        <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-400">
-            <span>{{ __('Or, return to') }}</span>
-            <flux:link :href="route('login')" wire:navigate>{{ __('log in') }}</flux:link>
-        </div>
-    </div>
-</x-layouts::auth>
+    <p class="back-link">Sudah ingat passphrase? <a href="{{ route('login') }}" wire:navigate>Kembali masuk</a></p>
+</x-layouts::auth.terminal>

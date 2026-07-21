@@ -1,52 +1,73 @@
-<x-layouts::auth :title="__('Reset password')">
-    <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Reset password')" :description="__('Please enter your new password below')" />
+<x-layouts::auth.terminal
+    :title="__('Setel ulang passphrase')"
+    scope-tag="Credential Reset"
+    scope-desc="Terbitkan passphrase baru untuk akun operator"
+>
+    <p class="eyebrow">// SETEL ULANG</p>
+    <h1 class="access-title">Setel Ulang Passphrase</h1>
+    <p class="access-sub">Buat passphrase baru untuk akun Anda.</p>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+    @if (session('status'))
+        <div class="alert alert-ok" role="status">{{ session('status') }}</div>
+    @endif
 
-        <form method="POST" action="{{ route('password.update') }}" class="flex flex-col gap-6">
-            @csrf
-            <!-- Token -->
-            <input type="hidden" name="token" value="{{ request()->route('token') }}">
+    @if ($errors->any())
+        <div class="alert" role="alert">
+            <span class="alert-tag">GAGAL</span>
+            <span>{{ $errors->first() }}</span>
+        </div>
+    @endif
 
-            <!-- Email Address -->
-            <flux:input
+    <form method="POST" action="{{ route('password.update') }}" class="form">
+        @csrf
+        <input type="hidden" name="token" value="{{ request()->route('token') }}">
+
+        <label class="field" for="email">
+            <span class="field-label">Email</span>
+            <input
+                id="email"
                 name="email"
-                value="{{ request('email') }}"
-                :label="__('Email')"
                 type="email"
+                value="{{ request('email') }}"
                 required
                 autocomplete="email"
-            />
+                class="field-input"
+            >
+        </label>
 
-            <!-- Password -->
-            <flux:input
-                name="password"
-                :label="__('Password')"
-                type="password"
-                required
-                autocomplete="new-password"
-                :placeholder="__('Password')"
-                viewable
-            />
+        <label class="field" for="password">
+            <span class="field-label">Passphrase Baru</span>
+            <span class="field-wrap">
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    autocomplete="new-password"
+                    placeholder="••••••••"
+                    class="field-input"
+                >
+                <button type="button" id="pwBtn" class="pw-toggle" onclick="termTogglePw()">LIHAT</button>
+            </span>
+        </label>
 
-            <!-- Confirm Password -->
-            <flux:input
+        <label class="field" for="password_confirmation">
+            <span class="field-label">Konfirmasi Passphrase</span>
+            <input
+                id="password_confirmation"
                 name="password_confirmation"
-                :label="__('Confirm password')"
                 type="password"
                 required
                 autocomplete="new-password"
-                :placeholder="__('Confirm password')"
-                viewable
-            />
+                placeholder="••••••••"
+                class="field-input"
+            >
+        </label>
 
-            <div class="flex items-center justify-end">
-                <flux:button type="submit" variant="primary" class="w-full" data-test="reset-password-button">
-                    {{ __('Reset password') }}
-                </flux:button>
-            </div>
-        </form>
-    </div>
-</x-layouts::auth>
+        <button type="submit" class="submit" data-test="reset-password-button">
+            <span>Setel Ulang Passphrase</span>
+        </button>
+    </form>
+
+    <p class="foot-note">AKTIVITAS SESI DIREKAM · <b>IMSI CATCHER</b></p>
+</x-layouts::auth.terminal>
