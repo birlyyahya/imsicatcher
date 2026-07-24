@@ -1,5 +1,5 @@
 <x-layouts::auth.terminal :title="__('Masuk')">
-    <p class="eyebrow">// AKSES TERBATAS</p>
+    <p class="eyebrow">// AKSES APLIKASI</p>
     <h1 class="access-title">Terminal</h1>
     <p class="access-sub">Masukkan kredensial operator untuk membuka kanal aman.</p>
 
@@ -64,5 +64,5 @@
         </button>
     </form>
 
-    <p class="foot-note">AKTIVITAS SESI DIREKAM · <b>IMSI CATCHER</b></p>
+    <p class="foot-note">Login ke aplikasi</p>
 </x-layouts::auth.terminal>

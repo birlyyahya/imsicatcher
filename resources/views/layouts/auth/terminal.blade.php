@@ -32,7 +32,7 @@
         a{color:inherit}
 
         .term-stage{
-            min-height:100svh; display:grid; grid-template-columns:1.15fr .85fr;
+            min-height:100svh; display:grid;
         }
 
         /* ---------- LEFT · SCOPE ---------- */
@@ -238,44 +238,6 @@
 </head>
 <body class="term">
     <main class="term-stage">
-        <section class="scope">
-            <div class="scope-grid" aria-hidden="true"></div>
-            <div class="scope-glow" aria-hidden="true"></div>
-            <div class="scanline" aria-hidden="true"></div>
-
-            <header class="brand">
-                <svg class="brand-glyph" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                    <circle cx="16" cy="16" r="13" stroke="currentColor" stroke-width="1.3" opacity=".55"/>
-                    <circle cx="16" cy="16" r="8" stroke="currentColor" stroke-width="1.3" opacity=".8"/>
-                    <circle cx="16" cy="16" r="2.6" fill="currentColor"/>
-                    <path d="M16 16 L27 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-                <span class="brand-word"><em>SIMICA</em></span>
-                <span class="brand-clr">CLEARANCE · L2</span>
-            </header>
-
-            <div class="scope-center">
-                <div class="radar" aria-hidden="true">
-                    <div class="radar-sweep"></div>
-                    <div class="radar-core"></div>
-                    <span class="blip blip-1"></span>
-                    <span class="blip blip-2"></span>
-                    <span class="blip blip-3"></span>
-                </div>
-                <div>
-                    <p class="scope-tag">{{ $scopeTag }}</p>
-                    <p class="scope-desc">{{ $scopeDesc }}</p>
-                </div>
-            </div>
-
-            <dl class="readouts">
-                <div><dt>KANAL</dt><dd class="ok">● AMAN</dd></div>
-                <div><dt>ENKRIPSI</dt><dd>AES-256</dd></div>
-                <div><dt>NODE</dt><dd>KEJATI</dd></div>
-                <div><dt>WAKTU</dt><dd id="term-clock">--:--:--</dd></div>
-            </dl>
-        </section>
-
         <section class="access">
             <div class="access-card">
                 <span class="bracket br-tl" aria-hidden="true"></span>
